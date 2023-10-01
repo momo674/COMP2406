@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>2406</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+body {
+	font-family: Arial, Helvetica, sans-serif;	
+	margin-left:80px;
+	margin-right:80px;
+}
+h1, h2, h3 {
+	font-weight: bold;
+	color: blue;
+}
+p {
+		font-size: large;
+}
+
+.red {
+	color: #F00;
+}
+.bold {
+	font-weight: bold;
+}
+.requirement {
+	font-weight: bold;
+	background-color: #6AF37A;
+}
+.requirement_danger {
+	font-weight: bold;
+	background-color: #F47272
+}
+.requirement_warning {
+	font-weight: bold;
+	background-color: #F6CA54
+}
+.code {
+	font-family: "Courier New", Courier, monospace;
+}
+.requirement_warning1 {	font-weight: bold;
+	background-color: #F7BD36
+}
+.code1 {font-family: "Courier New", Courier, monospace;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>COMP 2406 A Fall 2023&nbsp; &nbsp;</h1>
+<h1>Assignment 01: </h1>
+<h1>Single Page Client</h1>
+<p>&nbsp;</p>
+<h1 class="red">Due: Wed. Oct. 4 by 10:00pm submitted to <a href="https://brightspace.carleton.ca">brightspace</a></h1>
+<hr>
+<p><b><font size="+1" color="#FF0000">Revisions:</font></b></p>
+<p>Revisions will be noted here; check periodically to see if assignment revisions have been posted.</p>
+<p>Rev 1 [2023 09 22] Fixed some typos in the text. Also fixed image of output.</p>
+<hr>
+<h2>Node.js/Javascript based Single Page App</h2>
+
+<p>In this assignment you are going build a small single-page web app that is based on  just the native capabilties of javascript. Specifically you will build an app that allows a user to open a chord pro formatted (chords and lyrics) text files hosted on a node.js server and then within their browser properly display the chords above the lyrics and also allow users to transpose the chords up or down to a different musical key.</p>
+<p>This assignment is based on the contents of tutorials 01 and 02. It is not a particularly difficult assignment but it will be challenging just because a lot of the material is new to you (by the end of the course this will seem more like just a tutorial exercise).</p>
+<p>The components are:</p>
+<p><span class="bold">Server:</span> Built with just Node.js and only its built-in modules (e.g. http, path, fs, url) For this assignment use the supplied server. You will only be writting the client-side javascript that runs in the browser.</p>
+<p><span class="bold">Client:</span> Browser-based javascript that is provided with a web page from the server consisting of html, css, javascript.</p>
+<p class="text-danger"><span class="font-weight-bold">Assignment Restrictions:</span> <br>
+</p>
+<p class="text-danger"><span class="bold">Technology Restrictions: </span>You cannot modify the server.js code in this assignment.</p>
+<hr width="100%">
+<p><span class="badge-danger">Marking:</span> This assignment 
+is based on <span class="badge-danger">12</span> design requirements numbered <span class="badge-success"><span class="requirement">R1.1</span></span>...<span class="badge-success"><span class="requirement">R2.5</span></span> for a total of <span class="red">24</span> marks. </p>  
+<p>Marks are awarded, or deducted, based on requirements as follows. Note: TAs will be running and evaluating your assignment code so we are not requesting a demonstration video for the four term assignments(only for the final project).</p>
+<table border="1">
+  <tr>
+    <th width="83">Req Type</th>
+    <th width="716">Assignment Grading</th>
+  </tr>
+  <tr>
+    <td><span class="requirement_danger">R0.x</span></td>
+	  <td><p><span class="requirement_danger">Critical Submission and Intent Requirements.</span> Assignment gets 0 if <span class="bold">any</span> critical submission requirement (shown in red) is not met.<br>
+    </p></td>
+  </tr>
+  <tr>
+    <td><span class="requirement_warning">R0.x</span></td>
+	  <td><p><span class="requirement_warning">Good Practice Requirements.</span> You lose 2 marks for each good practice requirement (shown in amber) not met.<br>
+    </p></td>
+  </tr>
+  <tr>
+    <td><span class="requirement">Rx.x</span></td>
+	  <td><p><span class="requirement">Design Requirements.</span> You earn 2 marks for each design requirement (green) satisfied and well implemented; 1 mark if it's partly met or met but not well implemented; and 0 if it's not met or attempted.</p></td>
+  </tr>
+</table>
+<hr>
+<h2>Submission and Good Programming Practice Requirements</h2>
+
+<p>The following requirements pertain to all 
+your assignments regardless of what your application is supposed to do (i.e. 
+regardless of the design requirements). These requirements are to ensure that 
+your code is usable, readable, and maintainable.</p> 
+<p><span class="requirement_danger">R0.1</span> <span class="red">UNIQUENESS REQUIREMENT. The solution 
+and code you submit must be unique. That is, it cannot be a copy of, or be too 
+similar to, someone else's code, or other code found elsewhere. You are, however, free to use any code posted on our course website as 
+part of our assignment solution. [Assignment mark =0 if this requirement is not met.]</span></p>
+
+<p><span class="requirement_danger">R0.2</span>
+	<span class="red">README FILE: All your submissions MUST include a <span class="code">README.txt.</span> It must be a plain-text file with <span class="code">.txt</span> extension (.md, .html, .pdf, .doc etc. files will NOT be accepted.) Your <span class="code">README.txt </span>file is the first place the marking TA will look to evaluate your submission. Your <span class="code">README.txt</span> MUST contain the following:</span></p>
+<ul>
+<li>
+<p><span class="red"><span class="font-weight-bold">NAME: Your name and student number.</span></span></p>
+</li>
+<li>
+  <p><span class="red"><span class="font-weight-bold">INSTALL INSTRUCTIONS: instructions on what commands to execute to</span> install any external code modules needed to run your code. This will likely look like <code>npm install</code> or <code>npm install module_name</code> </span></p>
+</li>
+<li>
+<p><span class="red"><span class="font-weight-bold">LAUNCH INSTRUCTIONS: </span>Instructions on what command to execute to launch your app. e.g. <code>node server.js</code>. As the course progresses there will be more launch options so it's important to provide instructions.</span></p>
+</li>
+<li>
+<p> <span class="red"><span class="font-weight-bold">TESTING INSTRUCTIONS: </span></span><span class="red">(If relevant) provide the URL you want the TA to visit with their Chrome browser to test your server. For example:</span><span class="code1">http://localhost:3000/mytest.html?name=Louis</span></p>
+<p><span class="red">Pay attention to any specific URL's that must be supported by your app. If your app requires a userid/password to run then provide one for the TA to use.</span></p>
+</li>
+<li>
+    <p> <span class="red"><span class="font-weight-bold">VIDEO DEMONSTRATION: </span></span><span class="red">Tutorials and the final project assignment require that you post a YouTube video of you demonstrating your work. In those cases you must provide the YouTube link in your ReadMe.txt file. You WILL NOT need a demonstration video for the 4 term assignments.</span></p>
+  </li>
+</ul>
+<p><span class="red"><span class="font-weight-bold">[Assignment mark =0 if this requirement is not met.]</span></span></p>
+
+
+
+<p><span class="badge badge-danger"><span class="requirement_danger">R0.3</span></span>
+  <span class="red">CODE SUBMISSION, ORGANIZATION, AND COMPILATION: You should submit all the code files and data files necessary to compile and run your app. The TA's will execute your app by following the instructions you provide in the <span class="code">README.txt</span> file. You must submit a single<span class="code">.zip</span> formatted file to brightspace. (not .rar or .tar or whatever; only .zip format is accepted). Though you can write code on Windows, Linux, or Mac OS the code must be generic enough to be OS agnostic. (See also the the requirement below about not submitting the <span class="code">node_modules</span> directory). Your code must work with at least a current Chrome browser and version 18.x.x of node.js<br>
+  <span class="font-weight-bold">[Assignment mark =0 if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-danger"><span class="requirement_danger">R0.4</span></span> <span class="red">INTENT REQUIREMENT: The solution 
+and code you submit must comply with the intent of the assignment. For example if you are required to build a node.js/javascript server and you choose to build an apache/PHP server instead you will have violated the intent of the assignment even though the user input-output experience might be the same. As another example, if you are asked to build a &quot;thick client&quot; solution where the server just supplies data and the browser renders it but you build a &quot;thin client&quot; solution where the server renders all the HTML pages you will have violated the intent even though the user's experience would look the same. <br>
+</span><span class="red"> <span class="font-weight-bold">[Assignment mark =0 if this requirement is not met.]</span></span></p>
+<p>&nbsp;</p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.5</span></span> <span class="bold">VARIABLE AND FUNCTION NAMES:</span> All of 
+  your variables and functions should have meaningful names that reflect 
+  their purpose. Don't follow the convention common in math courses where they 
+  say things like: &quot;let x be the number of customers and let y be the number of 
+  products...&quot;. Instead call your variables <strong>numberOfCustomers</strong> or
+  <strong>numberOfProducts</strong>. Your program should not have any variables 
+  called &quot;x&quot; unless there is a good reason for them to be called &quot;x&quot;. (One 
+  exception: It's OK to call simple for-loop counters i,j and k etc. when the 
+  context is clear and VERY localized.) Javascript variables don't have types which can help clarify their meaning so choosing good names is even more important. Many functions in javascript are annonymous (have no name) and so the name of the variable that refers to them is even more important.</p>
+<p>Remember: any fool can write code that a computer will understand; the goal is to write code that we can understand. <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.6</span></span> <span class="bold">JAVASCRIPT IN STATIC HTML:</span> Your static html pages should NOT make direct reference to javascript functions. Don't do something like the following:</p>
+<pre>&lt;button type="button" onclick="myFunction()"&gt;Try it&lt;/button&gt;</pre>
+
+<p>Instead do something like this:</p>
+<pre>&lt;button type="button" id="submit_button"&gt;Try it&lt;/button&gt;</pre>
+
+	<p>and elsewhere in your <span class="code">.js</span> javascript file say:<br></p>
+<pre>document.getElementById('submit_button').addEventListener('click', myFunction)
+</pre>
+<p><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.7</span></span> <span class="bold">COMMENTS:</span> Comments in your code 
+  must coincide with what the code actually does. It is a  common bug to modify or cut-and-paste code and forget to modify the comments and so you 
+  end up with comments that say one thing and code that actually does another. Don't over-comment your code - instead choose good variable names 
+  and function names that make the code  &quot;self commenting&quot;. Don't be reluctant to create local variables  so that the variable name provides more clarity -there is no prize for having the fewest lines of code. <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.8</span></span> <span class="bold">MODULARIZATION:</span> Your client-side and server-side javascript should not be in two giant files. Break you client-side javascript into smaller manageable and readable  files and include them individually with <span class="code">&lt;script&gt;</span> tags in your html document. On the server-side use <span class="code">requires</span> or <span class="code">imports</span> appropriately to organize your code into managable size files. <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.9</span></span> <span class="bold">BLOATED CODE:</span> If your assigment uses external modules installed with npm, <span class="bold">DON'T</span> submit the <span class="code">node_modules</span> directory with your code (it's potentially huge).  Remove that directory and only submit the <span class="code">package.json</span> and <span class="code">package-lock.json</span> files. The TAs will use these files to install the required modules. NPM modules are platform specific and must be reinstalled on the marker's platform. <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.10</span></span> <span class="bold">CITATION REQUIREMENT:</span> If you use code from other sources you should cite the source in comments that appear with the code. If the source is an internet website then put the URL in the comments. You may use bits of code from outside sources but this may not form the complete solution you are handing in. You DON'T have to cite demo code we provide on the course web site or with tutorials and assignments, however that code should not be used for things you post publicly (like on GitHub). <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+<p class="red">VERY IMPORTANT: Any 
+sample code fragments provided may have bugs although none have been put there intentionally. You must be prepared to find errors in both the 
+requirements and sample code. Please report errors so they can be fixed and an assignment 
+revision posted.</p>
+<hr>
+<h1>Application Design Requirements</h1>
+<h2>Background</h2>
+<p class="red">It is intended that you will use your tutorial 02 code, or our tutorial 02 answer code, as your starting point for this assignment.</p>
+<p>In tutorial 02 you will have done an exercise to&nbsp; decompose a string consisting for chords and lyrics into individual strings consisting of only chords and lyrics with the intent that the chords get displayed properly above he lyrics. In tutorial 2 you will also have &quot;rendered&quot; the chords and lyrics as html elements on the client-side webpage. </p>
+<p>For this assignment we want to render on the client browser contents of chord-pro formated songs stored on the server. Below is an example of such a file. The file format represents the lyrics of songs with chord symbols embedded within the lyrics in [] brackets . This format is convenient for storage because the chords always stay in the correct relative position with the lyrics because they are imbedded within the lyrics.</p>
+<p>Chord Pro Text File:</p>
+
+<pre>
+Sister Golden Hair -America
+
+verse1:
+Well i [E]tried to make it sunday but i [G#min]got so damned depressed
+That i [A]set my sights on [E]monday and i [G#min]got myself undressed
+I ain't ready for the alter, but i [C#min]do [G#min]believe there's [A]times
+When a [F#min]woman sure can [A]be a friend of [E]mine [Esus2] [E]
+
+verse2:
+Well i [E]keep on thinkin bout you sister[G#min] golden hair surprise
+That i just can't live without you can't you [G#min]see it in my eyes
+I've been [A]one poor corre[F#min]spondent, i've been [C#min]too too [G#min]hard to [A]find
+But it [F#min]doesn't mean you [A]ain't been on my [E mind [Esus2] [E]
+
+chorus:
+Will you [B]meet me in the middle will you [A]meet me in the [E]end
+Will you [B]love me just a little just en[A]ough to show you [E]care
+Well i [F#min]tried to fake it i [G#min]don't mind sayin i [A]just can't make it
+
+
+</pre>
+
+
+<p>We want you to build the client-side single page app so that the lyrics (words) and chords are displayed in a browser web page. Moreover, once displayed, the user should be able to transpose the music to another key. </p>
+<p>This is intended to be a single page app, where the user just makes one request to a particular URL, and is based on the example code from tutorial 02 and the debugging techniques dissussed in tutorial 01.</p>
+<p>&nbsp;</p>
+<h2>1) Server-Side Requirements</h2>
+<p><span class="requirement_danger">R0.4</span> The server code is provided for you with this assignment. You should not modify this code. That TA will test your code with their own server copy which may well include new songs not provided with the demonstration code. Here are some properties of the server code provided with this assignment.</p>
+<p>The server has a <span class="code">songs</span> directory of chord pro formated text files. The server allows a client to access the songs with a browser. For this assignment the user is required to type the song title exactly. A more general and elegant solution might allow the matching to be more general (e.g. not case sensitive, not sensitivey to white space etc.).</p>
+<p>Server is hosted on port 3000 and reachable from a browser on the same machine visiting <span class="code">http://localhost:3000/index.html </span>Expect that we will be adding more songs to the <span class="code">songs</span> directory of the server when we test your code. That is, your code should not work with just the songs in the demo code.</p>
+<p>Note the server prints to the console the URL's that should be visited by the browser to demonstrate the app. We will ask you to do this too for the servers that you write in this course. </p>
+<p><img src="images/R0.2.png" width="558" height="142" alt=""/></p>
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+<h2>Client-Side Webapp Requirements</h2>
+<p>(Note: see the YouTube  video after the requirements are discussed below.)</p>
+<p><span class="badge-success"><span class="requirement">R1.1</span></span> When the client visits the application URL <span class="code">http://localhost:3000/index.html</span> the resulting webpage should have a text input field and a "Submit Request", button a &quot;Transpose Up&quot; button and a &quot;Transpose Down&quot; button and may look something like the following:</p>
+<p><img src="images/GUI0.png" alt="GUI image" ></p>
+<p>&nbsp;</p>
+<p><span class="badge-success"><span class="requirement">R1.2</span></span> The client should be able to request a song from the server by typing the song title in the text field and clicking the &quot;Submit Request&quot; button. If the song is available on the server the downloaded song should be displayed for the client as html content something like the following. </p>
+<p><img src="images/GUI1rev1.png" alt="GUI image" width="737" height="408" ></p>
+<p>&nbsp;</p>
+<p><span class="badge-success"><span class="requirement">R1.3</span></span> The lyrics and chords shown on the webpage should have the lyrics in blue and the chords in green. The colouring should be implmented using CSS styles.</p>
+<p><span class="badge-success"><span class="requirement">R1.4</span></span> The lyrics and chords shown on the webpage should be in the same monospace font (e.g. courier font).</p>
+<p><span class="badge-success"><span class="requirement">R1.5</span></span> The chords should be properly positioned above the lyrics and MUST NOT be in square brackets as they are in the chord pro formatted data provided by the server. (The first character of a chord should be positioned over the character following the chords closing &quot;]&quot; bracket - see image above.)</p>
+<p>HINT: if your chords are represented as a seperate lines of text with blanks used to space them out you should probably use &lt;pre&gt;&lt;/pre&gt; tags (prefromatted text) rather than &lt;p&gt;&lt;/p&gt; since the paragraph tags won't preserve the white space. Check on W3Schools for the difference between the two html tag types.</p>
+<p><span class="requirement">R1.6</span> If chords are embedded inside a word in the chord pro format then the chord should appear above the word and not have the word split. For example,  if the chord pro data looks like <span class="code">dep[G#min]ressed</span>. Then the page should display it like this this:</p>
+<pre>
+   G#mim
+depressed
+</pre>
+<p> and not like this:</p>
+<pre>
+   G#mim
+dep     ressed
+</pre>
+<p>Note in the image above there is one area where there does not appear to be enough space to represent the chords over the text in the intended position (e.g. the C#minG#min chords). You can resolve this spacing dilema however you want.</p>
+<p><span class="badge-success"><span class="requirement">R1.7</span></span> If the client requests a song from the server that does not exist the webpage could appear blank with only the buttons but the code should not crash as a result of a client requesting a non-existing song.</p>
+<p>&nbsp;</p>
+<h2>Transposition Requirements</h2>
+<p>Musicians  often need to transpose the chords of a song to another key. That is, transpose the chords up or down by a certain number of semi-tones (or half-steps). You will implement this feature using the transpose buttons on the webpage.</p>
+<p><span class="badge-success"><span class="requirement">R2.1</span></span> If the user presses the &quot;Transpose Up&quot; button the chords should be transposed up one semitone (or half-step) as they say in music. That is, an Am7 chord should be become A#m7 (or Bbm7), F#7 should become G7, Ebmin should become Emin etc. (see below for more explanation of what chord transposition means.)</p>
+<p><span class="badge-success"><span class="requirement">R2.2</span></span> If the user presses the &quot;Transpose Down&quot; button the chords should be transposed down one semitone (or half-step) as they say in music. That is, an Am7 chord should be become Abm7 (or G#m7), F#7 should become F7, Ebmin should become Dmin etc. (see below for more explanation of what chord transposition means, and be prepared to google for more understanding.) </p>
+<p><span class="badge-success"><span class="requirement">R2.3</span></span> Transposition should work correctly for slash chords that have two letter names in them. Slash chords end in a / followed by a second letter name. For example an A7/C# chord. Here both the &quot;A&quot; and &quot;C#&quot; letter names appear within the same chord.  It means the musician should play an A7 chord but with a C# note in the bass. The  example song &quot;Never My Love&quot; contains some slash chords.</p>
+<p><span class="badge-success"><span class="requirement">R2.4</span></span> When transposing the   chords of the orignal key should be shown in green but if the chords have been transposed they should appear in red. That way if the user is transposing up and down they will always recognize when they are back to the original key by the colour of the chords. So again: use a red colour to show any transposed chords and a green colour to show chords of the original key. -See the demonstration video below for an example of how this works. (If a note, or chord, is transposed up or down 12 semitones it is considered to be back at the original key.)</p>
+<p><span class="badge-success"><span class="requirement">R2.5</span></span> When transposing the   chords of the orignal key should not only be shown in green (as per the above requirement) but should appear with their original spelling. That is, if a chord was originally a Gbm7 and after transposition returns to the original key it should again be spelled as a Gbm7 and not an F#m7. (If a note is transposed up or down 12 semitones it is considered to be back at the original key.)</p>
+<h2>&nbsp;</h2>
+<h2>Transposition Explained</h2>
+<p>Here is an explanation of how chords are transposed but you should google this concept if you need more clarification -remember a programer will need to learn some of the domain that the app is about in order to understand the requirements and write the code.</p>
+<p>In western music there are 12 notes whose names are A, A# or Bb, B, C, C# or Db, D, D# or Eb, E, F, F# or Gb, G, G# or Ab. Moving from one note to the next one is called a distance of a semitone (or a half-step). It's perhaps easiest to visualize these as a table or array.</p>
+	<table width="611" border="1">
+  <tbody>
+    <tr>
+      <th width="45" scope="col">0</th>
+      <th width="74" scope="col">1</th>
+      <th width="45" scope="col">2</th>
+      <th width="48" scope="col">3</th>
+      <th width="78" scope="col">4</th>
+      <th width="48" scope="col">5</th>
+      <th width="78" scope="col">6</th>
+      <th width="45" scope="col">7</th>
+      <th width="42" scope="col">8</th>
+      <th width="81" scope="col">9</th>
+      <th width="68" scope="col">10</th>
+      <th width="17" scope="col">11</th>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>A#</td>
+      <td>B</td>
+      <td>C</td>
+      <td>C#</td>
+      <td>D</td>
+      <td>D#</td>
+      <td>E</td>
+      <td>F</td>
+      <td>F#</td>
+      <td>G</td>
+      <td>G#</td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>Bb</td>
+      <td>B</td>
+      <td>C</td>
+      <td>Db</td>
+      <td>D</td>
+      <td>Eb</td>
+      <td>E</td>
+      <td>F</td>
+      <td>Gb</td>
+      <td>G</td>
+      <td>Ab</td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>Seven of the notes have simple letter names (A,B,C,D,E,F, or G) and five of the notes have two names: a sharp (#) or flat (b) name (A# = Bb, C# = Db, D# = Eb, F# = Gb, G# = Ab).</p>
+  <p>To transpose a chord Dm7 up 4 semitones you would locate the chord's root name D in the table at index 5 and then look up the new root name at location 5 + 4 = 9. That is, Dm7 transposed up 4 semitones is F#m7. (If you end up going off the table you would wrap around to the start -i.e. do a mod 12 operation on the index sum.)</p>
+  <p>To transpose a chord Dbmaj down 6 semitones you would locate Db which is at index 4 then subtract 6 which would be -2 or 10 if we are wrapping around. Thus Dbmaj transposed down 6 semitones would be Gmaj.</p>
+  <p>Thus transposing up is moving to the right by the required number of semitones wrapping around if necessary. Transposing down is moving to the left by the required number of semitones wrapping around if necessary.</p>
+  <p>When chords are transposed only the note-name parts of the chord spelling changes. Other properties stay the same. For example Fsus4 chord transposed up the a semitone could be a Gbsus4 chord. The &quot;sus4&quot; part stays the same. Be aware there are slash chords, like Fm7/Ab which have two note-name portions (the F and the Ab after the slash). Both note name portions would have to be transposed.</p>
+  <hr width="100%">
+  <h2>Demonstration Video</h2>
+  <p>Here is a demonstration of the behaviour I'm asking you to build.</p>
+  <iframe width="187" height="105" src="https://www.youtube.com/embed/-I1jJ6d7mHs?si=ZFqgBGda9dN8Dk76" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  <hr>
+  <p>&nbsp;</p>
+<h2>Additional Notes.</h2>
+<p>We've simplified the three test song files provided so they only consist of one verse or chorus of text. That is sufficient for the assignment -you don't need to use long files of  entire songs.</p>
+<hr width="100%">
+</div>
+</body>
+</html>

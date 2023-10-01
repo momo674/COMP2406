@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+
+<html>
+    <style>
+        body{
+            background-color: gray;
+        }
+        #header {
+            text-align: center;
+            background-color: rgba(103, 103, 250, 0.603);
+            padding: 1px;
+        }
+
+        #pa{
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        
+          border: 15px solid black;
+        
+        }
+
+        #d {
+            font-weight: 900;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #emotion{
+            text-align: center;
+            background-color: yellow;
+
+        }
+        #but{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+       
+    </style>
+
+    <script>
+        x = 0;
+        
+        function e() {
+            if (x%2==0) {
+                document.getElementById("pa").src ="pain.gif" ;
+                document.getElementById('emotion').innerHTML = ' You are thugging it out.';
+                //document.getElementsByTagName("body").style.background
+            }
+
+            else{
+                document.getElementById("pa").src ="happy.png" ;
+                document.getElementById('emotion').innerHTML = ' You are living life.';
+
+            }
+
+            ++x;
+
+            if (x % 10 == 0) {
+                alert("Twerk");
+            }
+        }
+
+
+
+    </script>
+    <head>
+        <body>
+            <h1 id = "header"> This is your current emotion.</h1>
+
+            <img src="pb.gif" alt="pain" id = 'pa' height="500" width ="500" >
+
+            <h2 id = "emotion"> You are ...</h2>
+            <p1 id = "d"> Here there will be information displayed based on your current emotion.</p1>
+
+            <button id="but" onclick= 'e()' > Click me to Change! </button>
+
+            
+        </body>
+    </head>
+
+</html>
