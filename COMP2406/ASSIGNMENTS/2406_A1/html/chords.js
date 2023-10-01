@@ -88,14 +88,17 @@ function transposeUp(){
 
         }
         //console.log(elms[i].innerHTML)
-        console.log(b)
+        //console.log(b)
         for (let n = 0; n < b.length; n++) {
           let cur_note = b[n]
-          let new_note = transposeUpConvert(notes_total[i][n])
+          let new_note = transposeUpConvert(cur_note)
+          console.log(cur_note + ' ' + new_note);
           notes_total[i][n] = new_note
           elms[i].innerHTML = elms[i].innerHTML.replaceAll(cur_note, new_note)
-          //console.log(elms[i])
         }
+        console.log(elms[i].innerHTML)
+
+        
         // console.log(elms[i]);
         // console.log(notes_total[i]);
     }
@@ -109,7 +112,7 @@ function transposeUp(){
         }
         counter = 0;
     }
-    
+    console.log('\n')
     counter++; 
     
 
@@ -175,6 +178,8 @@ function transposeUp(){
     return final_note;
   }
  }
+
+ //console.log(transposeUpConvert('D'));
  
 
 
