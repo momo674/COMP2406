@@ -76,7 +76,7 @@ let notes_minor = ['A'	,'Bb','B',	,'C',	'Db',	'D',	'Eb',	'E',	'F',	'Gb',	'G'	,'A
 let counter = 0;
 function transposeUp(){
   
-    let elms = document.querySelectorAll("[id='noteline']");
+  let elms = document.querySelectorAll("[id='noteline']");
    if (elms.length == 0) {return;}
     
     
@@ -101,41 +101,60 @@ function transposeUp(){
 
           let cur_note = b[n]
           let new_note = transposeUpConvert(cur_note)
-          
-          
-
           tmp = replaceAll(notes_total[i],cur_note,new_note);
           notes_total[i] = tmp
-
-          elms[i].innerHTML = elms[i].innerHTML.replaceAll(cur_note, new_note)
-          //console.log(elms[i].innerHTML + " " + i + cur_note + " " + new_note)
           
+          if (cur_note.length == 1) {
+  
+            let pattern = new RegExp(`(?<![\\/])\\b${cur_note}\\b(?![/#])`, 'g');
+            
+            elms[i].innerHTML = elms[i].innerHTML.replaceAll(pattern, new_note)
+
+
+          }
+          
+          else {
+            let pattern = new RegExp(`(?<!\\/|\\S)${cur_note}(?!\\/|\\S)`, 'g');
+
+            elms[i].innerHTML = elms[i].innerHTML.replaceAll(pattern, new_note)
+          }
+
+          console.log(cur_note + " " + new_note + " " + i);
+          console.log(elms[i].innerHTML)
         }
         
         
         
-    
+        
+
     }
+    console.log("\n");
     counter++;
+
+    
     if (counter % 12 == 0 && counter!=0) {
       
       counter = 0;
-    
-    
-
-    for(var i = 0; i < elms.length; i++){
-      
-      elms[i].style.color='green';
-      
     }
-    return
+    
+    
+    if (counter % 12 == 0) {
+      for(var i = 0; i < elms.length; i++){
+      
+        elms[i].style.color='green';
+        
+      }
+      return
+    }
+    
     
    
     
-  }
+  
     
     
     
+  //console.log(counter)
 
 }
 function replaceAll(arr, old, n) {
@@ -268,49 +287,77 @@ function transposeDown(){
       }
       
       for (let n = 0; n < b.length; n++) {
-
-        
-        
-        
-
         let cur_note = b[n]
         let new_note = transposeDownConvert(cur_note)
-        
-        
-
         tmp = replaceAll(notes_total[i],cur_note,new_note);
         notes_total[i] = tmp
-
-        elms[i].innerHTML = elms[i].innerHTML.replaceAll(cur_note, new_note)
-        //console.log(elms[i].innerHTML + " " + i + cur_note + " " + new_note)
         
+        if (cur_note.length == 1 ) {
+
+          
+          let pattern = new RegExp(`(?<![\\/])\\b${cur_note}\\b(?![/#])`, 'g');
+
+          
+          elms[i].innerHTML = elms[i].innerHTML.replaceAll(pattern, new_note)
+
+
+        }
+
+        else if (cur_note.length == 1 ) {
+          
+          //let escapedCharacter = cur_note.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          let pattern = new RegExp(`(?<!\\/|\\S)${cur_note}(?!\\/|\\S)`, 'g');
+          //let outputString = input.replace(pattern, 'XX');
+          
+          
+          
+          elms[i].innerHTML = elms[i].innerHTML.replaceAll(pattern, new_note)
+
+
+        }
+        
+        //console.log(elms[i].innerHTML + " " + i + cur_note + " " + new_note)
+        else {
+          let pattern = new RegExp(`(?<!\\/|\\S)${cur_note}(?!\\/|\\S)`, 'g');
+
+          elms[i].innerHTML = elms[i].innerHTML.replaceAll(pattern, new_note)
+        }
+
+        console.log(cur_note + " " + new_note + " " + i ); 
+        console.log(elms[i].innerHTML)
+
       }
-      
-      
+        
       
   
-  }
-  counter--;
-  if (counter % 12 == 0 && counter!=0) {
+    }
+      
+      
+      
+    console.log("\n");
+      counter--;
+    
+  
+
+  if ((counter+12) % 12 == 0 && counter!=0) {
     
     counter = 0;
-  
-  
-
-  for(var i = 0; i < elms.length; i++){
-    
-    elms[i].style.color='green';
-    
   }
-  return
+  
+  if ((counter+12) % 12 == 0) {
+    for(var i = 0; i < elms.length; i++){
+    
+      elms[i].style.color='green';
+    }
+  }
   
  
   
-}
-  
-  
-  
 
+  
+  
+  
+  // console.log(counter)
 }
 
 function transposeDownConvert(note) {
@@ -333,7 +380,7 @@ function transposeDownConvert(note) {
       }
 
     }
-    note_re = transposeUpConvert(note1) + "/" + transposeUpConvert(note2);
+    note_re = transposeDownConvert(note1) + "/" + transposeDownConvert(note2);
     return note_re
    }
 
@@ -362,7 +409,7 @@ function transposeDownConvert(note) {
     index--; 
     
     
-    note_to_change = notes_minor[index % 12];
+    note_to_change = notes_minor[(index + 12) % 12];
     final_note = note_to_change + note_add_end;
     return final_note;
    }
@@ -379,8 +426,8 @@ function transposeDownConvert(note) {
       let index = notes_sharp.indexOf(note_to_change);
       index--; 
     
-    
-      note_to_change = notes_sharp[index % 12];
+     
+      note_to_change = notes_sharp[(index + 12) % 12];
       final_note = note_to_change + note_add_end;
       return final_note;
     }
@@ -405,7 +452,7 @@ function transposeDownConvert(note) {
     index--; 
     
     
-    note_to_change = notes_sharp[index % 12];
+    note_to_change = notes_sharp[(index + 12) % 12];
     final_note = note_to_change + note_add_end;
     return final_note;
   }
