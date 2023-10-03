@@ -61,10 +61,14 @@ function parseChordProFormat(chordProLinesArray) {
     }
    
    } 
-   //adds notes to html file
+   //checks
+   if (line.trim().length == 0) {continue;}
+   
     notes_line_stored.push(notes_line);
+    console.log(notes_line);
     textDiv.innerHTML += `<pre id = "noteline">${notes_line}</pre>`
-    textDiv.innerHTML +=  `<pre> ${line}</pre>`
+    textDiv.innerHTML +=  `<pre id ="normal"> ${line}</pre>`
+    textDiv.innerHTML += '<br>'
     notes_total.push(notes);
 
     
