@@ -61,14 +61,19 @@ function parseChordProFormat(chordProLinesArray) {
     }
    
    } 
-   //checks
+   //checks if the line is empty, if so we dont add it to html file.
    if (line.trim().length == 0) {continue;}
-   
+
+   //adding raw html line to list
     notes_line_stored.push(notes_line);
-    console.log(notes_line);
+
+
+    //updating inner html on index.html to have these new lines of notes.
     textDiv.innerHTML += `<pre id = "noteline">${notes_line}</pre>`
     textDiv.innerHTML +=  `<pre id ="normal"> ${line}</pre>`
     textDiv.innerHTML += '<br>'
+
+    //add our current list of notes into a list.
     notes_total.push(notes);
 
     
