@@ -1,5 +1,6 @@
-let notes_line_stored = [];
-let notes_total = [];
+let notes_line_stored = []; //stores raw html lines
+let notes_total = []; //stores arrays of notes at each index
+
 function parseChordProFormat(chordProLinesArray) {
   //parse the song lines with embedded
   //chord pro chords and add them to DOM
@@ -27,7 +28,7 @@ function parseChordProFormat(chordProLinesArray) {
       
       let selected_char = line.charAt(++x);
       
-
+      //adding notes
       while (selected_char != "]") {
         note+=selected_char;
         x++;
@@ -49,6 +50,7 @@ function parseChordProFormat(chordProLinesArray) {
     }
 
     notes_line = " ".repeat(line.length)
+    //formatting notes
    for (let i = 0; i < notes.length; i++) {
     if (notes_line.charAt(notes_index[i] - 1) != " ") {
       let prevnote = notes[i-1]
@@ -59,9 +61,19 @@ function parseChordProFormat(chordProLinesArray) {
     }
    
    } 
+   //checks if the line is empty, if so we dont add it to html file.
+   if (line.trim().length == 0) {continue;}
+
+   //adding raw html line to list
     notes_line_stored.push(notes_line);
+
+
+    //updating inner html on index.html to have these new lines of notes.
     textDiv.innerHTML += `<pre id = "noteline">${notes_line}</pre>`
-    textDiv.innerHTML +=  `<pre> ${line}</pre>`
+    textDiv.innerHTML +=  `<pre id ="normal"> ${line}</pre>`
+    textDiv.innerHTML += '<br>'
+
+    //add our current list of notes into a list.
     notes_total.push(notes);
 
     
@@ -70,20 +82,26 @@ function parseChordProFormat(chordProLinesArray) {
   
 }
 
-
+//lists of notes to use
 let notes_sharp = ['A',	'A#', 'B',  'C', 'C#',	'D',	'D#',	'E',	'F',	'F#',	'G',	'G#']
 let notes_minor = ['A'	,'Bb','B',	,'C',	'Db',	'D',	'Eb',	'E',	'F',	'Gb',	'G'	,'Ab']
-let counter = 0;
+let counter = 0; //which transpose we are at (how many up or down)
+
+
 function transposeUp(){
   
   let elms = document.querySelectorAll("[id='noteline']");
    if (elms.length == 0) {return;}
     
-    
+    //go through all the lines and modif
     for(var i = 0; i < elms.length; i++){
+      //note is changed, make it red
         elms[i].style.color='red';
+        
+        //list of notes (no repeats)
         let b = []
         
+        //turning our current list of notes into a set, no repeats
         for (let x = 0 ; x < notes_total[i].length; x++) {
           
           if (!b.includes(notes_total[i][x])) {
@@ -92,19 +110,16 @@ function transposeUp(){
 
 
         }
-        
+        //going through each element in our b array/set
         for (let n = 0; n < b.length; n++) {
 
-          
-          
-          
-
           let cur_note = b[n]
-          let new_note = transposeUpConvert(cur_note)
-          tmp = replaceAll(notes_total[i],cur_note,new_note);
-          notes_total[i] = tmp
+          let new_note = transposeUpConvert(cur_note) //function turns note into next note in tranpose lists
+          tmp = replaceAll(notes_total[i],cur_note,new_note); //custom function that replaces elements in array
+          notes_total[i] = tmp 
           
-          if (cur_note.length == 1) {
+          //replacing html notes
+          if (cur_note.length == 1) { //special case if it is one letter
   
             let pattern = new RegExp(`(?<![\\/])\\b${cur_note}\\b(?![/#])`, 'g');
             
@@ -119,8 +134,7 @@ function transposeUp(){
             elms[i].innerHTML = elms[i].innerHTML.replaceAll(pattern, new_note)
           }
 
-          console.log(cur_note + " " + new_note + " " + i);
-          console.log(elms[i].innerHTML)
+          
         }
         
         
@@ -128,10 +142,9 @@ function transposeUp(){
         
 
     }
-    console.log("\n");
     counter++;
 
-    
+    //if our counter hits 12 semitones, then we must reset it and set the current html colour to green
     if (counter % 12 == 0 && counter!=0) {
       
       counter = 0;
@@ -148,14 +161,6 @@ function transposeUp(){
     }
     
     
-   
-    
-  
-    
-    
-    
-  //console.log(counter)
-
 }
 function replaceAll(arr, old, n) {
   if (arr === undefined) {return []}
@@ -168,20 +173,21 @@ function replaceAll(arr, old, n) {
   return arr;
 }
 
-
+//function that returns a note one semitone higher than the parameter note
 function transposeUpConvert(note) {
-  if (note.includes('/')) { //double note
-    let note1 = ''
-    let note2 = ''
+  if (note.includes('/')) { // the case if it is a double note
+    let note1 = '' //the note before the /
+    let note2 = '' //the note after the /
     let note1_select = true;
-    for (let i = 0; i < note.length; i++) {
+    for (let i = 0; i < note.length; i++) { //looping through all characters of note
       
       if (note.charAt(i) == '/') {
+
         note1_select = false;
         continue
       }
       if (note1_select) {
-        note1+= note.charAt(i)
+        note1+= note.charAt(i) 
       }
 
       else {
@@ -189,48 +195,47 @@ function transposeUpConvert(note) {
       }
 
     }
-    note_re = transposeUpConvert(note1) + "/" + transposeUpConvert(note2);
+    note_re = transposeUpConvert(note1) + "/" + transposeUpConvert(note2); //use recurrsion to get next semtone notes
     return note_re
    }
 
 
-  else if (note.includes('b')) { //minor
-    let note_to_change = '';
-    let note_add_end = '';
-    let final_note = '';
+  else if (note.includes('b')) { //the case if the note is a minor
+    let note_to_change = ''; //the actual note
+    let note_add_end = ''; //random stuff after, such as 7
+    let final_note = ''; //the note to be returned
 
     for (let i = 0; i < note.length; i++) {
       let character = note.charAt(i)
       if (i == 0) {
+        note_to_change += character; //adds the note
+      }
+      else if (i == 1 && character == 'b') { //adds the minor symbol
         note_to_change += character;
       }
-      else if (i == 1 && character == 'b') {
-        note_to_change += character;
-      }
-      else {
+      else { //extra stuff gets added at the end
         note_add_end += character;
       }
     }
   
   
     
-    let index = notes_minor.indexOf(note_to_change);
+    let index = notes_minor.indexOf(note_to_change); //get index of this note, and increment it by 1.
     index++; 
     
     
-    note_to_change = notes_minor[index % 12];
+    note_to_change = notes_minor[index % 12]; //then we get the next note 
     final_note = note_to_change + note_add_end;
     return final_note;
    }
   
   else { //regular note or sharp
-    //seperate our note
 
-    let note_to_change = '';
-    let note_add_end = '';
-    let final_note = '';
+    let note_to_change = ''; //our main info about note
+    let note_add_end = ''; //the stuff at the end
+    let final_note = ''; //value to be returned
     
-    if (note.length == 1) {
+    if (note.length == 1) { //special case of note, it being A or B not A# or A#7
       note_to_change = note;
       let index = notes_sharp.indexOf(note_to_change);
       index++; 
@@ -241,7 +246,7 @@ function transposeUpConvert(note) {
       return final_note;
     }
     
-  
+    //regular case
     for (let i = 0; i < note.length; i++) {
       let character = note.charAt(i)
       if (i == 0) {
@@ -268,15 +273,16 @@ function transposeUpConvert(note) {
  }
 
 function transposeDown(){
-  
+  //collect all html elements with noteline tag
   let elms = document.querySelectorAll("[id='noteline']");
+
  if (elms.length == 0) {return;}
   
-  
+  //loops through html elements
   for(var i = 0; i < elms.length; i++){
-      elms[i].style.color='red';
-      let b = []
+      elms[i].style.color='red'; //changes to red since note is being changed
       
+      let b = [] //creates a set of the current array of notes
       for (let x = 0 ; x < notes_total[i].length; x++) {
         
         if (!b.includes(notes_total[i][x])) {
@@ -285,13 +291,16 @@ function transposeDown(){
 
 
       }
+
       
+      //loop through our set to convert each note
       for (let n = 0; n < b.length; n++) {
         let cur_note = b[n]
         let new_note = transposeDownConvert(cur_note)
         tmp = replaceAll(notes_total[i],cur_note,new_note);
         notes_total[i] = tmp
         
+        //special case if our note is only one character long
         if (cur_note.length == 1 ) {
 
           
@@ -315,30 +324,20 @@ function transposeDown(){
 
 
         }
-        
-        //console.log(elms[i].innerHTML + " " + i + cur_note + " " + new_note)
+        //regular case
         else {
           let pattern = new RegExp(`(?<!\\/|\\S)${cur_note}(?!\\/|\\S)`, 'g');
 
           elms[i].innerHTML = elms[i].innerHTML.replaceAll(pattern, new_note)
         }
 
-        console.log(cur_note + " " + new_note + " " + i ); 
-        console.log(elms[i].innerHTML)
-
       }
-        
-      
-  
-    }
-      
-      
-      
-    console.log("\n");
-      counter--;
-    
-  
 
+    }
+  
+    counter--;
+    
+    //if our counter is at the begginging of our array, then we change notes back to green.
   if ((counter+12) % 12 == 0 && counter!=0) {
     
     counter = 0;
@@ -357,9 +356,8 @@ function transposeDown(){
   
   
   
-  // console.log(counter)
 }
-
+//function that returns the next note one semitone down
 function transposeDownConvert(note) {
   if (note.includes('/')) { //double note
     let note1 = ''
