@@ -28,6 +28,15 @@ More on this when we investigate the keyword "this" in javascript.
 2) => functions cannot be used as constructors the way a function can
 */
 
+function printHi() {
+  console.log("Hi!")
+}
+
+let printHiarrow = () => {
+  console.log("hiwitharrow")
+}
+
+printHiarrow()
 function square(n) {
   return n * n
 }

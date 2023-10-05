@@ -25,7 +25,7 @@ object
 function sumAll() {
   result = 0
   for (var i = 0; i < arguments.length; i++)
-    result = result + arguments[i]
+    result = result + arguments[i] //arguments at i is the argument we inputted into the function. i = 0 is the first argument, and so on
   return result
 
 }

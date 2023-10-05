@@ -32,6 +32,7 @@ var values = [1, 2, 3, 4, 5];
 console.log(add.apply(null, values)); //6
 //ES6: spread operator with functions
 console.log(add(...values)); //6
+//... is like a for loop that gets all the values in array?
 
 //Spread operator with Arrays
 var contents = ['Am7', 'D7', 'Gmaj7', 'C', 'Fm'];
