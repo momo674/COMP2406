@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2406 Tut</title>
+<style>
+body {
+	font-family: arial;
+	margin-left: 80px;
+}
+p {
+	font-size:24px;
+}
+pre {
+	font-size:20px;
+}
+hr {
+	width: 100%;
+	height: 2px;
+	
+	margin-top:10px;
+	margin-bottom:10px
+}
+.header {
+	text-align: center;
+	font-weight: bold;
+	font-size: 40px;
+	
+	margin-top:0px;
+	margin-bottom:0px;
+	
+	color: rgb(153, 0, 0);
+}
+.subheader {
+	color: #000099;
+	
+	margin-bottom:100px;
+}
+.segment-header {
+	color: rgb(0, 0, 153);
+	font-size: 30px;
+}
+.requirement {
+	font-weight: bold;
+	background-color: #6AF37A;
+}
+.requirement_danger {
+	font-weight: bold;
+	background-color: #F47272
+}
+.requirement_warning {
+	font-weight: bold;
+	background-color: #F6CA54
+}
+.black-bold {
+	color: rgb(0,0,0);
+	font-weight: bold;
+}
+.glossary-term {
+	font-weight: 700;
+	color: #000099;
+}
+.code {
+	font-family: 'Courier New';
+}
+.comment {
+	color:rgb(0, 128, 0);
+}
+ul li {
+	margin-bottom: 5px;
+	font-size:24px;
+}.red {
+	color: #F00;
+}
+.green {
+	color: #0A0;
+}
+.code1 {font-family: "Courier New", Courier, monospace;
+}
+</style>
+</head>
+<body>
+<p class="header">COMP 2406 - Fall 2023 Tutorial 03</p>
+<p class="header subheader">Client-Server JSON Data</p>
+<hr/>
+<p>&copy; L.D. Nel 2023</p>
+<hr />
+<p class="red">Revisions will be noted here</p>
+<hr />
+<p class="segment-header">Description:</p>
+<p>This tutorial introduces you to the basic architecture of a  single-page web application that uses a <span class="code">&lt;canvas&gt;</span> element. Many web apps are not just html DOM elements but have a lot of graphics being rendered on a canvas. Think of an app like Google Maps. </p>
+<p>The main pieces are: a static server to serve the intial webpage, both server-side and client-side javascript, and the exchange of JSON data strings between client and server. The demo code will be used as a basis for the next assignment and future tutorials.</p>
+<p>Here we want to get you  working with  JSON formatted data passed between client and server, and working with server code, and client code that produce and consume those objects. </p>
+<p>In this demonstration the client will request some data from the server and update part of the web page being displayed based on the data. What is important to notice is that the client is NOT asking for an entire new web page, just some data to put into the existing one. This is often referred to as a &quot;single page app&quot;. The client request for  data is known as an AJAX request (Asynchronous Javascript and XML) although these days JSON strings are used more often in place of XML data, nevertheless people still call it AJAX. </p>
+<p>In the demo code the client is going to make an AJAX request as the result of the user clicking a submit button and then use the data returned from the server to draw new contents on the canvas.</p>
+<p><span class="red">Important: tutorials are meant to be started and submitted as homework. You can come and get help each week at your registered tutorial live help session but it's best to get started before the session.</span></p>
+<p class="text-danger"><span class="red">README.txt FILE: All your submissions MUST include a <span class="code1">README.txt.</span> It must be a plain-text file with .txt extension (.md, .html, .pdf, .doc etc. files will NOT be accepted.) Your README.txt file is the first place the marking TA will look to evaluate your code submission and demonstration. Your <span class="code1">README.txt</span> MUST contain the following:</span></p>
+<ul>
+  <li>
+    <p class="text-danger"><span class="red"><span class="font-weight-bold">NAME: Your name and student number.</span></span></p>
+  </li>
+  <li>
+    <p class="text-danger"><span class="red"><span class="font-weight-bold">INSTALL INSTRUCTIONS: instructions on what commands to execute to</span> install any external code modules needed to run your code. This will likely look like <code>npm install</code> or <code>npm install module_name</code></span></p>
+  </li>
+  <li>
+    <p class="text-danger"><span class="red"><span class="font-weight-bold">LAUNCH INSTRUCTIONS: </span>Instructions on what command to execute to launch your app. e.g. <code>node server.js</code>. As the course progresses there will be more launch options so it's important to provide instructions.</span></p>
+  </li>
+  <li>
+    <p class="text-danger"> <span class="red"><span class="font-weight-bold">TESTING INSTRUCTIONS: </span>(If relevant) provide the URL you want the TA to visit with their Chrome browser to test your server. For example:</span><span class="code1">http://localhost:3000/mytest.html?name=Louis</span></p>
+  </li>
+  <li><span class="red"><span class="font-weight-bold">YouTube VIDEO LINK: </span>All tutorials require you to demonstrate you work by posting a screen capture video with sound naration to YouTube. Your README.txt file must contain the link to your video and it should be &quot;unlisted&quot; so we can see it on YouTube. (That is, make sure it is not &quot;private&quot;.)</span></li>
+</ul>
+<p class="red">&nbsp;</p>
+<p class="red">Along with the README.txt file you will submit your code which the TAs will run at their discression. You will demonstrate your code by posting a screen capture video to YouTube. The video should have sound narration and demonstrate that you have met the tutorial requirements. Make sure your video is &quot;unlisted&quot; and not &quot;private&quot; on YouTube - otherwise we won't be able to view it and it will be counted as missing. </p>
+<p class="red">Submit a single .zip file with all your contents to Brightspace. Zip is the only compression format we will accept. Brightspace should allow you to resubmit your file up until the due time and will only keep the most recent submission. Grade is 0,1, or 2 as follows:</p>
+<p><br>
+</p>
+<p class="segment-header"></p>
+<p class="red"></p>
+<hr/>
+<p class="segment-header">Demo Code</p>
+<p>Open the   <span class="code">demo_code</span> folder  and run the  server found there. It has an accompanying <span class="code">html</span> folder from which it will serve the client-side application files.</p>
+<p>The server-side javascript is in the file: <span class="code">server.js</span> and the client-side javascript is in the html folder and contains files like <span class="code">canvasWithTimer.js</span>. Make sure you study the code until you know how the client-side javascript ends up with the client (you should be able to see it delivered using the network tab of the development tools in Chrome.)</p>
+<p>When the browser requests <span class="code">http://localhost:3000/index.html</span> you should see a browser application that looks like the following.</p>
+<p><img src="images/demo1.png" alt="demo1" /></p>
+<p>&nbsp;</p>
+<p>Notice the following. You can drag the words around with your mouse but you need to grab the word near the start of the word -if you grab long words near the middle it does not work. This is awkward and you will fix it in problem 2. </p>
+<p>You can move the blue box around with the arrow keys.</p>
+<p>Also, if you type a name of a song like &quot;Sister Golden Hair&quot; in the text field and then press the ENTER key, or press the &quot;Submit Request&quot; button, the request goes to the server (look at the server's console output) but it simply echos back a JSON object string containing the text &quot;NOT FOUND : Sister Golden Hair&quot; and the client code then uses that string as the word moving around the screen.</p>
+<p>Study the client side javascript function <span class="code">handleSubmitButton()</span> it looks something like the following:</p>
+<pre>
+
+function handleSubmitButton() {
+
+  let userText = document.getElementById('userTextField').value
+  if (userText && userText != '') {
+
+    let userRequestObj = {
+      text: userText
+    }
+    let userRequestJSON = JSON.stringify(userRequestObj)
+    document.getElementById('userTextField').value = ''
+    //alert ("You typed: " + userText);
+
+    let xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log("data: " + this.responseText)
+        console.log("typeof: " + typeof this.responseText)
+        //we are expecting the response text to be a JSON string
+        let responseObj = JSON.parse(this.responseText)
+        movingString.word = responseObj.text
+  
+        drawCanvas()
+      }
+
+    }
+    xhttp.open("POST", "userText") //API .open(METHOD, URL)
+    xhttp.send(userRequestJSON) //API .send(BODY)
+  }
+}
+</pre>
+<p>Notice the following. The user text is taken from the text field and placed in a javascript object<span class="code"> {text: userText}</span>. This object is then turned into a JSON data string using <span class="code">JSON.stringify()</span>. Then a HTTP <span class="black-bold">POST</span> message is sent to the server containing the request url and post message data. A callback function parameter is provided and called when the server's response comes back. </p>
+<p>The post message is being sent using the javascript native <span class="code">XMLHttpRequest</span> object. This is the traditional way to send an HTTP request directly from javascript without any helper modules (there are other ways too as you shall see in problem 5). Notice how the HTTP method is being set to &quot;POST&quot; and how the userText object is being added to the message. You can find more documentation on <span class="code">XMLHttpRequest</span> here but you don't need to know any more details for this tutorial: <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest">https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest</a> For those that might be interested in other ways of making HTTP requests see here: <a href="https://livecodestream.dev/post/5-ways-to-make-http-requests-in-javascript/">https://livecodestream.dev/post/5-ways-to-make-http-requests-in-javascript/</a></p>
+<p>In this code the callback function is expecting the data to arrive as text to be interpreted as a JSON data string which can be turned back into a javascript object using <span class="code">JSON.parse()</span>. At that point the javascript object can be accessed for data provided by the server. Read the section in the course notes, and watch the lecture video, on JSON Basics.</p>
+<p>If you are ever in doubt about what is being returned from the server you can print the item to the browser's <span class="black-bold">console</span> with <span class="code">console.log(...)</span> and view  the output with the browser's developer tools. This will be an important debugging technique throughout the course. By the way <span class="code">console.dir(myObject)</span> does a nice job of &quot;pretty printing&quot; complex objects on the browser console in a way that can be manually inspected -try it.</p>
+<p>Notice none of this involves loading a new web page. It is just a  request for some JSON data from the server.</p>
+<hr>
+<p class="segment-header">&nbsp;</p>
+<p class="segment-header">Problem 1</p>
+<p>For problem 1 we want you to modify the code so that the three words &quot;I like Javascript&quot; appear in random locations on the canvas. Read up on how to generate a random number in javascript. Basically the following line of code will generate a random integer between 0 and the width of the canvas:</p>
+<p class="code">Math.floor(Math.random()*canvas.width)</p>
+<p>You could, for example, write a function that modifies the locations of the <span class="code">word</span> objects in the <span class="code">words[]</span> array and call that function when the document is loaded (that is, from the code in the <span class="code">eventListeners.js</span> file). Try to make sure that a word is not outside, or mostly outside, the canvas boundary.</p>
+<p>After completing the problem the page might load something like this:</p>
+<p><img src="images/problem1-1.png" width="818" height="522" alt=""/></p>
+<hr>
+
+<p class="segment-header">&nbsp;</p>
+<p class="segment-header">Problem 2</p>
+<p>Look at the code that implements the  server. Notice it has a directory called songs and that contains song .txt files that each have one or two lines from the lyrics of those songs. There are files for songs like: &quot;Peaceful Easy Feeling&quot;, &quot;Sister Golden Hair&quot;, and &quot;Brown Eyed Girl&quot;.</p>
+<p>Notice further that if the client types say &quot;Sister Golden Hair&quot; in the client textfield and presses their submit button the server actually responds with the words of the song by that title. Confirm this by looking at both the server and client console outputs or be prepared to log items to those consoles. </p>
+<p>Modify the client code in the <span class="code">handleSubmitButton()</span> function so that the client uses words returned by the server to re-populate its words array and have the words from the song appear at random locations on the canvas. The user should then be able to drag these new words around with their mouse. Also the word moving around the screen should change to &quot;FOUND&quot;.</p>
+<p>To do this be prepared to print on the browser console exactly what the server is returning. You should then be able to loop through the words in the server response.</p>
+<p><img src="images/problem2-1.png" alt="demo2" /></p>
+<p>&nbsp;</p>
+<p>If the user submits a request for a song &quot;XXXX&quot; that the server does not have the moving words should still change to &quot;NOT FOUND: XXXX&quot; as in the demo code.</p>
+<p>Again, a useful debugging strategy is for server-side javascript to print to the server's console and for client-side javascript to print to the browser's console which is visible when you display its developer tools.</p>
+<hr>
+<p class="segment-header">&nbsp;</p>
+<p class="segment-header">Problem 3</p>
+<p>As mentioned, one annoying thing with the client code is that you have to grab the word with the mouse near the start of the word. The client code is currently not aware of the width of the word you are trying to grab. On the other hand, the moving word bounces off the walls of the canvas so the timer code moving the word around is clearly aware of the width of that word. </p>
+<p>For this problem modify the <span class="code">getWordAtLocation()</span> function in the client-side javascript so it too is aware of the width of the word you are trying to drag. Study how the width of the moving word is measured (see the canvas drawing function and the timer handler function).</p>
+<p>After making these modifications you should be able to drag words around by clicking the mouse anywhere along the word -much better.</p>
+<hr>
+<p class="segment-header">&nbsp;</p>
+<p class="segment-header">Problem 4</p>
+<p>For this problem we want you to modify the code so that everytime you submit a request for a song the title in the user text field also gets added as a paragraph to the bottom of the web page:</p>
+<p><img src="images/problem3.png" width="582" height="603"></p>
+<p>&nbsp;</p>
+<p>To accomplish this do the following:</p>
+<p>1) In the <span class="code">index.html</span> file add the following <span class="code">&lt;div id=&quot;text-area&quot;&gt;&lt;/div&gt;</span> after the markup that defines the &quot;Submit Button&quot;.</p>
+<pre>
+    &lt;input type = "text"  id="userTextField" name = "userTextField"  value="" size = "60" /&gt;
+    &lt;input type="button" value="Submit Request" onClick="handleSubmitButton()"&gt;
+    <span class="black-bold">&lt;div id="text-area"&gt;&lt;/div&gt;</span></pre>
+<p>&nbsp;</p>
+<pre><span class="code">
+</span></pre>
+<p>The <span class="code">id=&quot;text-area&quot;</span> attribute of the <span class="code">&lt;div&gt;</span> tag can be used to target it with javascript as we will do next. Look up on W3Schools what an html <span class="code">&lt;div&gt;</span> tag is supposed to represent.</p>
+<p>2) Add the following code (shown in bold) to the <span class="code">handleSubmitButton</span> function in <span class="code">buttonAndKeyListeners.js</span> to add the html paragraph item each time the submit button is pressed. This illustrates one way that javascript can access and modify the html elements of a web page.</p>
+<pre>
+function handleSubmitButton () {
+   //get text from user text input field
+   let userText = document.getElementById('userTextField').value 
+	if(userText && userText != ''){
+		
+	   <span class="black-bold">let textDiv = document.getElementById("text-area")
+	   textDiv.innerHTML = textDiv.innerHTML + `&lt;p&gt; ${userText}&lt;/p&gt;`</span>
+
+	   let userRequestObj = {text: userText};
+      //...
+   }
+}
+
+</pre>
+<hr>
+<p class="segment-header">Problem 5</p>
+<p>Finally, now that you are somewhat familar with the code we want you to explore the <span class="code">fetch()</span> alternative to using the <span class="code">XMLHttpRequest</span>. Modern browsers support the fetch API as follows: (This example assumes the server is sending a JSON object string).</p>
+<pre>
+const data = { username: 'example' }
+
+fetch('https://example.com/profile', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then((response) => response.json())
+.then((data) => {
+    console.log('Success:', data)
+    //process the data how you want
+})
+.catch((error) => {
+    console.error('Error:', error)
+})
+</pre>
+<p>This fetch code uses the notion of promises which use the <span class="code">.then()</span> and <span class="code">.catch()</span> methods as wrappers to asynchronous functions. We may not have covered that by this point in the course but you don't really need to know how they work here - just follow th code template provided. You can read more about fetch here if you like: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch</a></p>
+<p>&nbsp;</p>
+<p>Add a new button called <span class="black-bold">Submit Request with Fetch</span>, add an event handler to it, and make a copy of the <span class="code">handleSubmitButton() </span>handler calling it <span class="code">handleSubmitButtonWithFetch()</span>. Make whatever changes are needed in the <span class="code">handleSubmitButtonWithFetch()</span> copy so that the code uses the <span class="code">fetch()</span> protocol instead of using the <span class="code">XMLHttpRequest</span>. When finished the behaviour you see using the original <span class="black-bold">Submit Request</span> button and the <span class="black-bold">Submit Request With Fetch</span> button should be the same.</p>
+<p><img src="images/problem5.png" width="704" height="479" alt=""/></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p class="red">When you have completed these problems create a screen capture video, with sound, that demonstrates you've completed problems 2,3,4 and 5. Since problem 5 is asking your to implement something that already works but with a different coding style, make sure to show your code for this problem in your demonstration video. Submit your code and readme.txt file (containing your YouTube link) to brightpace. </p>
+<hr>
+<h2>&nbsp;</h2
+>
+
+</body>
+</html>
