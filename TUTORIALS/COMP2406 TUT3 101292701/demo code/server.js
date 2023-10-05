@@ -116,6 +116,7 @@ http.createServer(function(request, response) {
             returnObj.filePath = songFile
             response.writeHead(200, { "Content-Type": MIME_TYPES["json"] })
             response.end(JSON.stringify(returnObj))
+            console.log(returnObj)
           }
         })
       }

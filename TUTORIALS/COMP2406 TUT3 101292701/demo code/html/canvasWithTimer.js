@@ -27,6 +27,7 @@ words.push({word: "I", x: 50, y: 50})
 words.push({word: "like", x: 70, y: 50})
 words.push({word: "javascript", x: 120, y: 50})
 
+
 //represents the word moving around the canvas being
 //animated using timer events
 let movingString = {
@@ -51,6 +52,19 @@ let timer //used for the motion animation
 
 const canvas = document.getElementById('canvas1') //our drawing canvas
 
+//problem 1.
+function randomLocation(wrds) {
+  for (let i = 0; i < wrds.length; i++) {
+    wrds[i].x = Math.floor(Math.random()*canvas.width);
+    wrds[i].y = Math.floor(Math.random()*canvas.height);
+  }
+  
+  
+}
+
+randomLocation(words)
+
+//problem 3.
 function getWordAtLocation(aCanvasX, aCanvasY) {
 
   //locate the word near aCanvasX,aCanvasY
@@ -61,8 +75,13 @@ function getWordAtLocation(aCanvasX, aCanvasY) {
   //as it is implemented now
   const TOLERANCE = 20;
   for (let i = 0; i < words.length; i++) {
-    if (Math.abs(words[i].x - aCanvasX) < TOLERANCE &&
-      Math.abs(words[i].y - aCanvasY) < TOLERANCE) return words[i]
+    const ctx = canvas.getContext("2d")
+    console.log(`${words[i].word} --> x-cord: ${words[i].x} aCanvasX: ${aCanvasX} Math.abs: ${Math.abs(words[i].x  - aCanvasX )} word-length: ${ctx.measureText(words[i].word).width} \n`)
+    
+    
+    //very long if statement using the length of our word to allow where we can mclick to move it.
+    if ((words[i].x <= aCanvasX && aCanvasX <= words[i].x + ctx.measureText(words[i].word).width) && (Math.abs(words[i].y  - aCanvasY )) < (TOLERANCE)) {return words[i]}
+    
   }
   return null
 }
@@ -89,9 +108,9 @@ function drawCanvas() {
     context.strokeText(data.word, data.x, data.y)
 
   }
-
+  
   movingString.stringWidth = context.measureText(movingString.word).width
-  //console.log(movingString.stringWidth)
+  // console.log(movingString.stringWidth)
   context.fillText(movingString.word, movingString.x, movingString.y)
 
   //draw moving box
