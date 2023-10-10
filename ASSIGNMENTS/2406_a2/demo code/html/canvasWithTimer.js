@@ -23,9 +23,9 @@ server via POST message sending JSON data
 //DATA MODELS
 //Use javascript array of objects to represent words and their locations
 let words = []
-words.push({word: "I", x: 50, y: 50})
-words.push({word: "like", x: 70, y: 50})
-words.push({word: "javascript", x: 120, y: 50})
+// words.push({word: "I", x: 50, y: 50})
+// words.push({word: "like", x: 70, y: 50})
+// words.push({word: "javascript", x: 120, y: 50})
 
 
 //represents the word moving around the canvas being

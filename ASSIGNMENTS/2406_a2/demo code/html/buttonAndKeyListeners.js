@@ -87,6 +87,7 @@ function handleSubmitButton() {
         }
         else {
           movingString.word = "FOUND"
+          words = [];
           const lyrics = responseObj.songLines
           for (let i = 0; i < lyrics.length; i ++) {
 
