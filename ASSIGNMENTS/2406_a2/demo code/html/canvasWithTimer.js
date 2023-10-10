@@ -80,7 +80,10 @@ function getWordAtLocation(aCanvasX, aCanvasY) {
     
     
     //very long if statement using the length of our word to allow where we can mclick to move it.
-    if ((words[i].x <= aCanvasX && aCanvasX <= words[i].x + ctx.measureText(words[i].word).width) && (Math.abs(words[i].y  - aCanvasY )) < (TOLERANCE)) {return words[i]}
+    if ((words[i].x <= aCanvasX && aCanvasX <= words[i].x + ctx.measureText(words[i].word).width) && (Math.abs(words[i].y  - aCanvasY )) < (TOLERANCE)) {
+      console.log(words[i]);
+      console.log(words);
+      return words[i]}
     
   }
   return null
