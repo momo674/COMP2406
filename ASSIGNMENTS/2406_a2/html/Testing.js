@@ -29,67 +29,70 @@ function sortByCoordinatesX(a, b) {
 words = [
     {
         "word": "roses",
-        "x": 67,
-        "y": 59
+        "x": 44,
+        "y": 34
     },
     {
         "word": "are",
-        "x": 60,
-        "y": 139
+        "x": 140,
+        "y": 61
     },
     {
         "word": "red",
-        "x": 66,
-        "y": 99
+        "x": 209,
+        "y": 86
     },
     {
         "word": "violets",
-        "x": 60,
-        "y": 119
+        "x": 122,
+        "y": 120
     },
     {
         "word": "are",
-        "x": 67,
-        "y": 80
+        "x": 203,
+        "y": 119
     },
     {
         "word": "blue",
-        "x": 61,
-        "y": 159
+        "x": 250,
+        "y": 121
     },
     {
         "word": "i",
-        "x": 78,
-        "y": 185
+        "x": 175,
+        "y": 189
     },
     {
         "word": "need",
-        "x": 56,
-        "y": 208
+        "x": 200,
+        "y": 185
     },
     {
         "word": "to",
-        "x": 75,
-        "y": 234
+        "x": 274,
+        "y": 183
     },
     {
-        "word": "poo",
-        "x": 63,
-        "y": 256
+        "word": "sleep",
+        "x": 307,
+        "y": 185
     }
 ]
 
 words.sort(sortByCoordinatesY)
-console.log(words);
+//console.log(words);
 
 let tmp = []
 let result = []
 let counter = 0;
 for (let i = 0; i < words.length; i++ ) {
+   
     if (counter > 0) {
 
-        if (Math.abs(words[i]["y"] - words[i-1]["y"]) > 30) { //current word is at a much different line
+        if (Math.abs(words[i]["y"] - words[i-1]["y"]) > 15) { //current word is at a much different line
+            if (counter!=1){result.push("")}; //adding new line
             result.push(...tmp);
+            
             tmp = [];
             counter = 0;
         }
@@ -109,6 +112,7 @@ for (let i = 0; i < words.length; i++ ) {
     }
    
 }
+result.push("")
 result.push(...tmp);
 words.sort(sortByCoordinatesX)
 
