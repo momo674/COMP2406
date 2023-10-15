@@ -76,13 +76,13 @@ function getWordAtLocation(aCanvasX, aCanvasY) {
   const TOLERANCE = 20;
   for (let i = 0; i < words.length; i++) {
     const ctx = canvas.getContext("2d")
-    console.log(`${words[i].word} --> x-cord: ${words[i].x} aCanvasX: ${aCanvasX} Math.abs: ${Math.abs(words[i].x  - aCanvasX )} word-length: ${ctx.measureText(words[i].word).width} \n`)
+    //console.log(`${words[i].word} --> x-cord: ${words[i].x} aCanvasX: ${aCanvasX} Math.abs: ${Math.abs(words[i].x  - aCanvasX )} word-length: ${ctx.measureText(words[i].word).width} \n`)
     
     
     //very long if statement using the length of our word to allow where we can mclick to move it.
     if ((words[i].x <= aCanvasX && aCanvasX <= words[i].x + ctx.measureText(words[i].word).width) && (Math.abs(words[i].y  - aCanvasY )) < (TOLERANCE)) {
-      console.log(words[i]);
-      console.log(words);
+      //console.log(words[i]);
+      //console.log(words);
       return words[i]}
     
   }

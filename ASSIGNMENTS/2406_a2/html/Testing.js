@@ -28,54 +28,54 @@ function sortByCoordinatesX(a, b) {
 
 words = [
     {
-        "word": "roses",
-        "x": 44,
-        "y": 34
-    },
-    {
-        "word": "are",
-        "x": 140,
-        "y": 61
+        "word": "violets",
+        "x": 117,
+        "y": 209
     },
     {
         "word": "red",
-        "x": 209,
-        "y": 86
-    },
-    {
-        "word": "violets",
-        "x": 122,
-        "y": 120
-    },
-    {
-        "word": "are",
-        "x": 203,
-        "y": 119
+        "x": 218,
+        "y": 253
     },
     {
         "word": "blue",
-        "x": 250,
-        "y": 121
-    },
-    {
-        "word": "i",
-        "x": 175,
-        "y": 189
+        "x": 287,
+        "y": 9
     },
     {
         "word": "need",
-        "x": 200,
-        "y": 185
-    },
-    {
-        "word": "to",
-        "x": 274,
-        "y": 183
+        "x": 344,
+        "y": 182
     },
     {
         "word": "sleep",
-        "x": 307,
-        "y": 185
+        "x": 344,
+        "y": 299
+    },
+    {
+        "word": "to",
+        "x": 445,
+        "y": 30
+    },
+    {
+        "word": "are",
+        "x": 563,
+        "y": 239
+    },
+    {
+        "word": "roses",
+        "x": 585,
+        "y": 131
+    },
+    {
+        "word": "are",
+        "x": 597,
+        "y": 60
+    },
+    {
+        "word": "i",
+        "x": 599,
+        "y": 207
     }
 ]
 
@@ -118,4 +118,3 @@ words.sort(sortByCoordinatesX)
 
 
 console.log(result)
-

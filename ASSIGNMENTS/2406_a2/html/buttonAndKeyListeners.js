@@ -5,8 +5,9 @@ const RIGHT_ARROW = 39
 const LEFT_ARROW = 37
 const UP_ARROW = 38
 const DOWN_ARROW = 40
-
-
+let word_order = [];
+words = [];
+let result = []
 function handleKeyDown(e) {
 
   //console.log("keydown code = " + e.which)
@@ -62,6 +63,7 @@ function handleSubmitButton() {
 
     //problem 4.
     let textDiv = document.getElementById("text-area")
+    textDiv.innerHTML = ``;
 	  textDiv.innerHTML = textDiv.innerHTML + `<p> ${userText}</p>`
 
     let userRequestObj = {text: userText}
@@ -87,8 +89,33 @@ function handleSubmitButton() {
         }
         else {
           movingString.word = "FOUND"
+          result = [];
           words = [];
+          word_order = [];
           const lyrics = responseObj.songLines
+
+          if (lyrics.length == 1) {
+            f = lyrics[0].indexOf(' ') >= 0;
+            if (!f) {
+              for (let i = 0; i < lyrics.length; i ++) {
+
+                const words_in_line = lyrics[i].split("");
+    
+                for (let j = 0; j < words_in_line.length; j++) {
+    
+                    words.push({word: words_in_line[j], x: 50, y: 50})
+                    word_order.push(words_in_line[j])
+                }
+              }
+              
+              randomLocation(words)
+              drawCanvas()
+              return;
+            }
+          }
+          
+          
+          
           for (let i = 0; i < lyrics.length; i ++) {
 
             const words_in_line = lyrics[i].split(" ");
@@ -96,11 +123,12 @@ function handleSubmitButton() {
             for (let j = 0; j < words_in_line.length; j++) {
 
                 words.push({word: words_in_line[j], x: 50, y: 50})
-
+                word_order.push(words_in_line[j])
             }
           }
-
+          
           randomLocation(words)
+
         }
         
         
@@ -116,49 +144,96 @@ function handleSubmitButton() {
 
 //problem 5.
 function handleSubmitButtonWithFetch() {
-  let userText = document.getElementById('userTextField').value;
+  let textDiv = document.getElementById("text-area")
+    textDiv.innerHTML = ``;
+    
+    puzzle_check(words)
+    let text = '';
+    for (let i = 0; i < result.length; i++) {
+      if (result[i] == "") {
+        textDiv.innerHTML = textDiv.innerHTML + `<p> ${text} </p>`
+        textDiv.innerHTML = textDiv.innerHTML + `<p></p>`
+        text = ""
+        continue
+      }
+      text = text + result[i]['word'] + " "
+    }
+    textDiv.innerHTML = textDiv.innerHTML + `<p> ${text} </p>`
 
-  if (userText && userText !== '') {
-    let textDiv = document.getElementById("text-area");
-    textDiv.innerHTML = textDiv.innerHTML + `<p> ${userText}</p>`;
-
-    let userRequestObj = { text: userText };
-    let userRequestJSON = JSON.stringify(userRequestObj);
-    document.getElementById('userTextField').value = '';
-
-    // Use the fetch API to make the POST request
-    fetch("userText", {
-      method: "POST",
-      body: userRequestJSON,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((responseObj) => {
-        if (responseObj.text.includes("NOT FOUND:")) {
-          movingString.word = "NOT FOUND";
-        } else {
-          movingString.word = "FOUND";
-          const lyrics = responseObj.songLines;
-          for (let i = 0; i < lyrics.length; i++) {
-            const words_in_line = lyrics[i].split(" ");
-            for (let j = 0; j < words_in_line.length; j++) {
-              words.push({ word: words_in_line[j], x: 50, y: 50 });
-            }
-          }
-          randomLocation(words);
-        }
-        drawCanvas();
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
-  }
 }
 
+
+const yPadding = 20;
+
+function sortByCoordinatesY(a, b) {
+  if (a.y === b.y) {
+      return a.x - b.x;
+  }
+  return a.y - b.y;
+}
+
+function sortByCoordinatesX(a, b) {
+  if (a.x === b.x) {
+      return a.y - b.y;
+  }
+  return a.x - b.x;
+}
+function puzzle_check(attempt) {
+  sorted_attempt = attempt
+  sorted_attempt.sort(sortByCoordinatesY)
+  result = []
+  let tmp = []
+  let counter = 0;
+  
+  for (let i = 0; i < sorted_attempt.length; i++ ) {
+     
+      if (counter > 0) {
+  
+          if (Math.abs(sorted_attempt[i]["y"] - sorted_attempt[i-1]["y"]) > 15) { //current word is at a much different line
+              if (counter!=1){result.push("")}; //adding new line
+              result.push(...tmp);
+              
+              tmp = [];
+              counter = 0;
+          }
+  
+          else {
+              tmp.push(sorted_attempt[i])
+              tmp.sort(sortByCoordinatesX)
+              counter++;
+          }
+          
+  
+          
+      }
+      if (counter == 0) {
+          tmp.push(words[i])
+          counter++
+      }
+     
+  }
+  result.push("")
+  result.push(...tmp);
+  sorted_attempt.sort(sortByCoordinatesX)
+  attempt_output = []
+  for (let i = 0; i < result.length; i++) {
+    //console.log(result[i]['word'])
+    if (result[i] == "") {continue;}
+    attempt_output.push(result[i]['word'])
+  }
+  
+  for (let i = 0; i < word_order.length; i++) {
+    if (word_order[i] != attempt_output[i]){
+      document.getElementById("text-area").style.color = 'red'
+      break
+    }
+    if (i === word_order.length - 1) {
+      document.getElementById("text-area").innerHTML = ""
+
+      document.getElementById("text-area").style.color = 'green'
+    }
+  }
+
+
+  
+}

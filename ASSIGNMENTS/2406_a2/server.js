@@ -94,7 +94,7 @@ http.createServer(function(request, response) {
     if (request.method === "POST" && urlObj.pathname === "/userText") {
     //a POST request to fetch a song
     //look for song file in songs directory based on song title
-    let songFile = `songs/${dataObj.text.trim()}.txt`
+    let songFile = `puzzles/${dataObj.text.trim()}.txt`
     console.log(`Looking for song file: ${songFile}`)
     fs.exists(songFile, (exists) => {
       if(exists){
