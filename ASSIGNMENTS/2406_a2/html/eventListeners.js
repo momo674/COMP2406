@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('submit_button').addEventListener('click', handleSubmitButton)
 
   //add listener to submit with fetch button (problem 5)
-  document.getElementById('submit_button_fetch').addEventListener('click', handleSubmitButtonWithFetch)
+  document.getElementById('submit_button_fetch').addEventListener('click', solvePuzzle)
 
   //add key handler for the document as a whole, not separate elements.
   document.addEventListener('keydown', handleKeyDown)
