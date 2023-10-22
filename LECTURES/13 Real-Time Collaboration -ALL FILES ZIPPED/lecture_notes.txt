@@ -1,0 +1,21 @@
+Polling has one web client that acts as a special one. Then the rest of the clients consistently update and ask
+for information using get methods. spams the sever basically.
+the server gets spammed (not a good design)
+
+
+ ls
+ 
+
+ sockets are the end points that code uses to communicate on the internet
+ on tcpip protocols.
+
+ sockets are used to talk to other programs over the internet
+ think of it as if we had fiels running locally they talk to each other in their own methods
+ but over the internet it is much different
+
+
+ web sockets are sockets that use HTTP protocol (it is just html web traffic flying around)
+
+ any client that uses HTTP can participate in sockets.
+
+ sockets are

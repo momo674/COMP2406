@@ -64,7 +64,9 @@ function handleSubmitButton() {
     //problem 4.
     let textDiv = document.getElementById("text-area")
     textDiv.innerHTML = ``;
+    document.getElementById("text-area").style.color = 'black'
 	  textDiv.innerHTML = textDiv.innerHTML + `<p> ${userText}</p>`
+    //textDiv.innerHTML = textDiv.innerHTML.style.color = `black`;
 
     let userRequestObj = {text: userText}
     let userRequestJSON = JSON.stringify(userRequestObj)
@@ -93,10 +95,10 @@ function handleSubmitButton() {
           words = [];
           word_order = [];
           const lyrics = responseObj.songLines
-
+          //pushing words into canvas and randomizing location
           if (lyrics.length == 1) {
-            f = lyrics[0].indexOf(' ') >= 0;
-            if (!f) {
+            contains_spaces = lyrics[0].indexOf(' ') >= 0;
+            if (!contains_spaces) {
               for (let i = 0; i < lyrics.length; i ++) {
 
                 const words_in_line = lyrics[i].split("");
@@ -142,8 +144,8 @@ function handleSubmitButton() {
   }
 }
 
-//problem 5.
-function handleSubmitButtonWithFetch() {
+//determines if current coordinates of words[] list is in order of puzzle file
+function solvePuzzle() {
   let textDiv = document.getElementById("text-area")
     textDiv.innerHTML = ``;
     
@@ -164,20 +166,22 @@ function handleSubmitButtonWithFetch() {
 
 
 const yPadding = 20;
-
+//function that sorta by Y cord
 function sortByCoordinatesY(a, b) {
   if (a.y === b.y) {
       return a.x - b.x;
   }
   return a.y - b.y;
 }
-
+//function that sorta by x cord
 function sortByCoordinatesX(a, b) {
   if (a.x === b.x) {
       return a.y - b.y;
   }
   return a.x - b.x;
 }
+
+//function sees if our current orientation of words on canvas matches the order in the puzzle file.
 function puzzle_check(attempt) {
   sorted_attempt = attempt
   sorted_attempt.sort(sortByCoordinatesY)
@@ -220,6 +224,7 @@ function puzzle_check(attempt) {
     //console.log(result[i]['word'])
     if (result[i] == "") {continue;}
     attempt_output.push(result[i]['word'])
+
   }
   
   for (let i = 0; i < word_order.length; i++) {
