@@ -1,0 +1,1 @@
+1. make sign up button - > `Connect as: NAME FIELD`
