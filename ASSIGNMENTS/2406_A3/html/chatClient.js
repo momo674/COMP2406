@@ -7,7 +7,11 @@ const socket = io() //by default connects to same server that served the page
 var socket_username = ''
 
 socket.on('serverSays', function(message) {
+  if (socket_username === '') {return;} //makes sure only to recieve messages once fully connected.
+
   let msgDiv = document.createElement('div')
+  msgDiv.textContent = message
+
   /*
   What is the distinction among the following options to set
   the content? That is, the difference among:
@@ -15,8 +19,19 @@ socket.on('serverSays', function(message) {
   */
   //msgDiv.innerHTML = message
   //msgDiv.innerText = message
-  msgDiv.textContent = message
-  if (socket_username === '') {return;} //makes sure only to recieve messages once fully connected.
+  const [s, m] = message.split(': ');
+  console.log(s);
+  if (s === socket_username) {
+    // Message sent by you (the current socket)
+    msgDiv.style.background = '#ccebff'; // Add a CSS class for sent messages
+    msgDiv.style.marginLeft= '60px'; 
+} else {
+    // Message received from another socket
+    msgDiv.style.background = '#808080'; // Add a CSS class for sent messages
+    msgDiv.style.marginRight= '60px'; 
+
+}
+
   document.getElementById('messages').appendChild(msgDiv)
 })
 
