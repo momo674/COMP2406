@@ -8,7 +8,14 @@ var socket_username = ''
 
 socket.on('serverSays', function(message) {
   if (socket_username === '') {return;} //makes sure only to recieve messages once fully connected.
-
+  if (message === 'You are connected to CHAT SERVER') {
+    let msgDiv = document.createElement('div')
+    msgDiv.textContent = message
+    msgDiv.style.background = '#ccffcc'; // Add a CSS class for sent messages
+    msgDiv.style.marginBottom= '20px';
+    document.getElementById('messages').appendChild(msgDiv)
+    return;
+  }
   let msgDiv = document.createElement('div')
   msgDiv.textContent = message
 

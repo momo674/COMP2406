@@ -1,1 +1,3 @@
-1. make sign up button - > `Connect as: NAME FIELD`
+get a list of clients:
+
+https://stackoverflow.com/questions/6563885/how-do-i-get-a-list-of-connected-sockets-clients-with-socket-io
