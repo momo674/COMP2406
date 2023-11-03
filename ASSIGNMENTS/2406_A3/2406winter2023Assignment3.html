@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>2406</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+body {
+	font-family: Arial, Helvetica, sans-serif;	
+	margin-left:80px;
+	margin-right:80px;
+}
+h1, h2, h3 {
+	font-weight: bold;
+	color: blue;
+}
+p {
+		font-size: large;
+}
+
+.red {
+	color: #F00;
+}
+.bold {
+	font-weight: bold;
+}
+.requirement {
+	font-weight: bold;
+	background-color: #6AF37A;
+}
+.requirement_danger {
+	font-weight: bold;
+	background-color: #F47272
+}
+.requirement_warning {
+	font-weight: bold;
+	background-color: #F6CA54
+}
+.requirement_legacy {
+	font-weight: bold;
+	background-color: #DDDDDD
+}
+	
+.code {
+	font-family: "Courier New", Courier, monospace;
+}
+.requirement_warning1 {	font-weight: bold;
+	background-color: #F7BD36
+}
+.code1 {font-family: "Courier New", Courier, monospace;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>COMP 2406 Fall 2023 Assignment 3: </h1>
+<h1>Chat Server with Private Messaging</h1>
+<p>&nbsp;</p>
+<h1 class="red">Due Wed. Nov. 8 by 10:00pm submitted to <a href="https://brightspace.carleton.ca">brightspace</a></h1>
+<hr width="100%">
+<p><b><font size="+1" color="#FF0000">Revisions:</font></b></p>
+<p>Revisions will be noted here</p>
+<hr width="100%">
+
+<p>In this assignment you are going extend the demonstration code that implements a simple chat server based on web sockets. The assignment is based on your work in tutorial 5 and the chat server demonstration code in the course notes section of Real-Time Collaboration with Web Sockets.<span class="bold"></span></p>
+<p>For this assignment you will be installing the npm module Socket.io (as is done in the demonstration code).</p>
+<p>&nbsp;</p>
+<hr width="100%">
+<p><span class="badge-danger">Marking:</span> This assignment 
+is based on 15 (green) design requirements numbered <span class="requirement">R1.1</span>...<span class="requirement">R5.2</span> for a total of <span class="red">30</span> marks. </p>  
+<p>Marks are awarded, or deducted, based on requirements as follows. Note: TAs will be running and evaluating your assignment code so we are not requesting a demonstration video for the four term assignments(only for the final project).</p>
+<table border="1">
+  <tr>
+    <th width="83">Req Type</th>
+    <th width="716">Assignment Grading</th>
+  </tr>
+  <tr>
+    <td><span class="requirement_danger">R0.x</span></td>
+    <td><p><span class="requirement_danger">Critical Submission and Intent Requirements.</span> Assignment gets 0 if <span class="bold">any</span> critical submission requirement (shown in red) is not met.<br>
+    </p></td>
+  </tr>
+  <tr>
+    <td><span class="requirement_warning">R0.x</span></td>
+    <td><p><span class="requirement_warning">Good Practice Requirements.</span> You lose 2 marks for each good practice requirement (shown in amber) not met.<br>
+    </p></td>
+  </tr>
+  <tr>
+    <td><span class="requirement">Rx.x</span></td>
+    <td><p><span class="requirement">Design Requirements.</span> You earn 2 marks for each design requirement (green) satisfied and well implemented; 1 mark if it's partly met or met but not well implemented; and 0 if it's not met or attempted.</p></td>
+  </tr>
+</table>
+<hr>
+<h2>Submission and Good Programming Practice Requirements</h2>
+<p>The following requirements pertain to all 
+  your assignments regardless of what your application is supposed to do (i.e. 
+  regardless of the design requirements). These requirements are to ensure that 
+  your code is usable, readable, and maintainable.</p>
+<p><span class="requirement_danger">R0.1</span> <span class="red">UNIQUENESS REQUIREMENT. The solution 
+  and code you submit must be unique. That is, it cannot be a copy of, or be too 
+  similar to, someone else's code, or other code found elsewhere. You are, however, free to use any code posted on our course website as 
+  part of our assignment solution. [Assignment mark =0 if this requirement is not met.]</span></p>
+<p><span class="requirement_danger">R0.2</span> <span class="red">README FILE: All your submissions MUST include a <span class="code">README.txt.</span> It must be a plain-text file, be called &quot;README&quot;, and have a <span class="code">.txt</span> extension (.md, .html, .pdf, .doc etc. files will NOT be accepted.) Your <span class="code">README.txt </span>file is the first place the marking TA will look to evaluate your submission. Your <span class="code">README.txt</span> MUST contain the following:</span></p>
+<ul>
+  <li>
+    <p><span class="red"><span class="font-weight-bold">NAME: Your name and student number.</span></span></p>
+  </li>
+  <li>
+    <p><span class="red"><span class="font-weight-bold">INSTALL INSTRUCTIONS: instructions on what commands to execute to</span> install any external code modules needed to run your code. This will likely look like <code>npm install</code> or <code>npm install module_name</code></span></p>
+  </li>
+  <li>
+    <p><span class="red"><span class="font-weight-bold">LAUNCH INSTRUCTIONS: </span>Instructions on what command to execute to launch your app. e.g. <code>node server.js</code>. As the course progresses there will be more launch options so it's important to provide instructions.</span></p>
+  </li>
+  <li>
+    <p> <span class="red"><span class="font-weight-bold">TESTING INSTRUCTIONS: </span></span><span class="red">(If relevant) provide the URL you want the TA to visit with their Chrome browser to test your server. For example:</span><span class="code1">http://localhost:3000/mytest.html?name=Louis</span></p>
+    <p><span class="red">Pay attention to any specific URL's that must be supported by your app. If your app requires a userid/password to run then provide one for the TA to use.</span></p>
+  </li>
+  <li>
+    <p> <span class="red"><span class="font-weight-bold">VIDEO DEMONSTRATION: </span></span><span class="red">Tutorials and the final project assignment require that you post a YouTube video of you demonstrating your work. In those cases you must provide the YouTube link in your ReadMe.txt file. You WILL NOT need a demonstration video for the 4 term assignments.</span></p>
+  </li>
+</ul>
+<p><span class="red"><span class="font-weight-bold">[Assignment mark =0 if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-danger"><span class="requirement_danger">R0.3</span></span> <span class="red">CODE SUBMISSION, ORGANIZATION, AND COMPILATION: You should submit all the code files and data files necessary to compile and run your app. The TA's will execute your app by following the instructions you provide in the <span class="code">README.txt</span> file. You must submit a single<span class="code">.zip</span> formatted file to brightspace. (not .rar or .tar or whatever; only .zip format is accepted). Though you can write code on Windows, Linux, or Mac OS the code must be generic enough to be OS agnostic. (See also the the requirement below about not submitting the <span class="code">node_modules</span> directory). Your code must work with at least a current Chrome browser and version 18.x.x of node.js<br>
+  <span class="font-weight-bold">[Assignment mark =0 if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-danger"><span class="requirement_danger">R0.4</span></span> <span class="red">INTENT REQUIREMENT: The solution 
+  and code you submit must comply with the intent of the assignment. For example if you are required to build a node.js/javascript server and you choose to build an apache/PHP server instead you will have violated the intent of the assignment even though the user input-output experience might be the same. As another example, if you are asked to build a &quot;thick client&quot; solution where the server just supplies data and the browser renders it but you build a &quot;thin client&quot; solution where the server renders all the HTML pages you will have violated the intent even though the user's experience would look the same. <br>
+</span><span class="red"> <span class="font-weight-bold">[Assignment mark =0 if this requirement is not met.]</span></span></p>
+<p>&nbsp;</p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.5</span></span> <span class="bold">VARIABLE AND FUNCTION NAMES:</span> All of 
+  your variables and functions should have meaningful names that reflect 
+  their purpose. Don't follow the convention common in math courses where they 
+  say things like: &quot;let x be the number of customers and let y be the number of 
+  products...&quot;. Instead call your variables <strong>numberOfCustomers</strong> or <strong>numberOfProducts</strong>. Your program should not have any variables 
+  called &quot;x&quot; unless there is a good reason for them to be called &quot;x&quot;. (One 
+  exception: It's OK to call simple for-loop counters i,j and k etc. when the 
+  context is clear and VERY localized.) Javascript variables don't have types which can help clarify their meaning so choosing good names is even more important. Many functions in javascript are annonymous (have no name) and so the name of the variable that refers to them is even more important.</p>
+<p>Remember: any fool can write code that a computer will understand; the goal is to write code that we can understand. <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.6</span></span> <span class="bold">JAVASCRIPT IN STATIC HTML:</span> Your static html pages should NOT make direct reference to javascript functions. Don't do something like the following:</p>
+<pre>&lt;button type="button" onclick="myFunction()"&gt;Try it&lt;/button&gt;</pre>
+<p>Instead do something like this:</p>
+<pre>&lt;button type="button" id="submit_button"&gt;Try it&lt;/button&gt;</pre>
+<p>and elsewhere in your <span class="code">.js</span> javascript file say:<br>
+</p>
+<pre>document.getElementById('submit_button').addEventListener('click', myFunction)
+        </pre>
+<p><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.7</span></span> <span class="bold">COMMENTS:</span> Comments in your code 
+  must coincide with what the code actually does. It is a  common bug to modify or cut-and-paste code and forget to modify the comments and so you 
+  end up with comments that say one thing and code that actually does another. Don't over-comment your code - instead choose good variable names 
+  and function names that make the code  &quot;self commenting&quot;. Don't be reluctant to create local variables  so that the variable name provides more clarity -there is no prize for having the fewest lines of code. <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.8</span></span> <span class="bold">MODULARIZATION:</span> Your client-side and server-side javascript should not be in two giant files. Break you client-side javascript into smaller manageable and readable  files and include them individually with <span class="code">&lt;script&gt;</span> tags in your html document. On the server-side use <span class="code">requires</span> or <span class="code">imports</span> appropriately to organize your code into managable size files. <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.9</span></span> <span class="bold">BLOATED CODE:</span> If your assigment uses external modules installed with npm, <span class="bold">DON'T</span> submit the <span class="code">node_modules</span> directory with your code (it's potentially huge).  Remove that directory and only submit the <span class="code">package.json</span> and <span class="code">package-lock.json</span> files. The TAs will use these files to install the required modules. NPM modules are platform specific and must be reinstalled on the marker's platform. <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+<p><span class="badge badge-warning"><span class="requirement_warning">R0.10</span></span> <span class="bold">CITATION REQUIREMENT:</span> If you use code from other sources you should cite the source in comments that appear with the code. If the source is an internet website then put the URL in the comments. You may use bits of code from outside sources but this may not form the complete solution you are handing in. You DON'T have to cite demo code we provide on the course web site or with tutorials and assignments, however that code should not be used for things you post publicly (like on GitHub). <span class="font-weight-bold"><span class="red">[Minus 2 marks from assignment if this requirement is not met.]</span></span></p>
+<p class="red">VERY IMPORTANT: Any 
+  sample code fragments provided may have bugs although none have been put there intentionally. You must be prepared to find errors in both the 
+  requirements and sample code. Please report errors so they can be fixed and an assignment 
+  revision posted.</p>
+<hr>
+<h2>&nbsp;</h2>
+<h2>Application Design Requirements</h2>
+<p>The demonstration chat server code provides a simple web socket-based server that allows multiple browser clients to chat with each other.  In tutorial 5 you will have gained some experience using the socket.io library to turn a polling-based collaborative application into an event driven one using web sockets. </p>
+<p>Try the chat server code to see how it works. (Better yet put it on your openstack image and chat with other students in the class.)</p>
+<p><img src="images/01 chat demo.png" width="611" height="379" alt=""/></p>
+<p>&nbsp;</p>
+<p>In the demonstration code the chatting is indented every other line using some CSS styling. You don't need to keep that if you don't want to. Also you can change the cosmetics of the buttons and such as you like.</p>
+<p>For this assignment we want you to finish building the chat application by modifying the provided code to accommodate the following design requirements.</p>
+<p>&nbsp;</p>
+<h2>1) Connection Requirements</h2>
+<p><span class="requirement">R1.1</span> Add a dedicated text field and a button labelled <span class="bold">connect as</span> to the web page. Make sure the button is next to or just below the text field on the page.</p>
+<p><span class="requirement">R1.2</span> A user should NOT be allowed to chat with others until they enter a user name in the dedicated field and press the &quot;connect as&quot; button. At that point they should be allowed to chat with others. [You don't have to check whether a user name chosen is already in use but it would be a nice touch if you did.]</p>
+<p><span class="requirement">R1.3</span> Only user names that start with a letter and have only letters and numbers should be accepted as valid user names. If the user name does not comply the text field should be blanked out and no successful connection established when the user presses their <span class="bold">connect as</span> button. [Note: we will NOT be testing the scenario where two users accidently choose the same user name.]</p>
+<p><span class="requirement">R1.4</span> The application should show an acknowledgement from the server when a client has  successfully connected as a user. </p>
+<p>&nbsp;</p>
+<h2>2) Chatting Requirements</h2>
+<p><span class="requirement">R2.1</span> When a user types a message in the text field associated with the <span class="bold">SEND</span> button and presses the  button, or presses the enter key on their keyboard, that message should appear on all the clients windows currently connected to the server.</p>
+<p><span class="requirement">R2.2</span> Messages should only be delivered to clients who have successfully registered as users. (That is, it is not enough to just load the webpage as is done in the demonstration code.)</p>
+<p><span class="requirement">R2.3</span> Your interface should have a dedicated <span class="bold">CLEAR</span> button. When the clear button is pressed all of the current chat content on that user's page should be cleared (erased). The chat screens of other clients should not be affected. This feature allows a local user to &quot;clear their screen&quot;.</p>
+<p><span class="requirement">R2.4</span> The chatting should be implemented using web sockets and not use a polling timer.</p>
+<p>&nbsp;</p>
+<h2>3) Speaker Display Requirements</h2>
+<p><span class="requirement">R3.1</span> When someone's message is being displayed it should be prefixed by their user name followed by a &quot;:&quot;. In the demonstration code you just see a message like<br>
+  <span class="code">Hello</span><br>
+  but we want the message to be displayed like<br>
+  <span class="code">ldnel: Hello</span></p>
+<p>The sender's user name should be displayed like that on all client browsers including that of the sender.</p>
+<p><span class="requirement">R3.2</span> When a user is looking at their own browser window the messages they sent should appear in blue. Messages from other users should appear in black (except private messages as described below). That way it will be easier for someone to spot their own sends.</p>
+<p><span class="requirement">R3.3</span> The colouring of messages should be implemented using CSS styling in your code.</p>
+<p>&nbsp;</p>
+<h2>4) Private Message Requirements</h2>
+<p><span class="requirement">R4.1</span> If a user enters, say, <span class="code">ldnel: How Are You?</span> in the send text field and then hits the <span class="bold">SEND</span> button or presses their enter key then the message should only be delivered to user <span class="code">ldnel</span> and also be displayed on the sender's client. [Note: ideally the sender should still be allowed to use a &quot;:&quot; character in their message body but we won't test for that.] We will leave it up to you whether you want to allow a user to message themselves - you can either allow it or prevent it as you like.<br>
+</p>
+<p><span class="requirement">R4.2</span> Private messages should be displayed in red on the chat clients. The message should also be shown in red on the sender's client. Again, colouring should be implemented with CSS styling.</p>
+<p>&nbsp;</p>
+<h2>5) Group Private Message Requirements</h2>
+<p><span class="requirement">R5.1</span> If a user enters, say, <span class="code">lou, sue, anne: How Are You?</span> in the send text field and then hits the send button or presses their enter key then the message should only be delivered to users <span class="code">lou</span>, <span class="code">sue</span> and <span class="code">anne</span> and also be displayed on the sender's client. [Note: ideally the sender should still be allowed to use a &quot;:&quot; character in their message body but we won't test for that.] You should allow the user to have spaces after the comma or not. That is, accept both  <span class="code">lou, sue, anne: How Are You? </span>or  <span class="code">lou,sue,anne: How Are You?</span><br>
+</p>
+<p><span class="requirement">R5.2</span> Group private messages should also be displayed in red on the chat clients. The message should also be shown in red on the sender's client. Again, colouring should be implemented with CSS styling.</p>
+<p>&nbsp;</p>
+</div>
+</body>
+</html>
