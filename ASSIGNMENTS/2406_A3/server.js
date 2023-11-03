@@ -80,16 +80,25 @@ function handler(request, response) {
 
 //Socket Server
 io.on('connection', function(socket) {
-  var USERNAME;
-  console.log('client connected')
+  var USERNAME = '';
   //console.dir(socket)
+  console.log('client connected')
 
-  socket.emit('serverSays', 'You are connected to CHAT SERVER')
 
   socket.on('clientSays', function(data, data2) {
+    if (USERNAME === "" && data2 != "") {
+      USERNAME = data2;
+      console.log(`USER ' ${data2} ' CONNECTED!`)
+      socket.emit('serverSays', `${USERNAME} HAS CONNECTED`)
+
+    }
     //data1 = message
     //data2 = username
-    USERNAME = data2;
+
+    //check if username is appropiate
+    if (data2 === '') {
+      return
+    }
     console.log('USERNAME: ' + USERNAME)
     console.log('RECEIVED: ' + data)
     //to broadcast message to everyone including sender:

@@ -3,9 +3,9 @@
 
 //const socket = io('http://' + window.document.location.host)
 const socket = io() //by default connects to same server that served the page
-
+//beforeUsernameScreen()
 var socket_username = ''
-console.log("USERNAME: " + socket_username + " CONNECTED")
+
 socket.on('serverSays', function(message) {
   let msgDiv = document.createElement('div')
   /*
@@ -16,18 +16,94 @@ socket.on('serverSays', function(message) {
   //msgDiv.innerHTML = message
   //msgDiv.innerText = message
   msgDiv.textContent = message
+  if (socket_username === '') {return;} //makes sure only to recieve messages once fully connected.
   document.getElementById('messages').appendChild(msgDiv)
 })
 
-function hideEverything() {
-  document.getElementById('Connected').style.display = 'none';
+// function beforeUsernameScreen() {
+//   document.getElementById('title').style.display = 'none'
+//   document.getElementById('messages').style.display = 'none'
+//   document.getElementById('msgBox').style.display = 'none'
+//   document.getElementById('send_button').style.display = 'none'
+//   document.getElementById('clear_button').style.display = 'none'
 
-  //document.getElementsByTagName("BODY").style.display = "none";
+
+// }
+
+function afterUsernameScreen() {
+
+  document.getElementById('title').style.display = 'block'
+  document.getElementById('messages').style.display = 'block'
+  document.getElementById('msgBox').style.display = 'block'
+  document.getElementById('send_button').style.display = 'block'
+  document.getElementById('clear_button').style.display = 'block'
+
+  document.getElementById('welcome').style.display = 'none'
+  document.getElementById('usernamebox').style.display = 'none'
+  document.getElementById('send_username_button').style.display = 'none'
+  document.getElementById('error').style.display = 'none'
+
+
 }
+
+function clearButton() {
+  document.getElementById('messages').replaceChildren();
+
+}
+
+function usernameCheck(username) {
+
+  // str1 = "1momo"            -> false
+  // str2 = "mohamad radaideh" -> false
+  // str3 = "momo"             -> true
+  // str4 = "!@#$%^&*()_+{}"   -> false
+
+  // if (!(username.indexOf(' ') >= 0) || username === '' || !username) {
+  //   return false;
+  // }
+  
+  //check if username starts with letter
+  // result = (str) => str.length === 1 && str.match(/[a-z]/i);
+  // if (!result(username.charAt(0))) {
+  //   return false;
+  // }
+
+  //check if name has only numbers and letters
+  for (let i = 0; i < username.length; i++) {
+    let value = username.charCodeAt(i)
+
+    
+    //check if character is a number (0...9)
+    if (48 <= value && value <= 57) {
+      if (i === 0) {
+        return false;
+      }
+      continue
+    }
+
+    //check if it is a capital letter (A, B C ..)
+    else if (65 <= value && value<= 90) {
+      continue;
+    }
+
+    //check if it is a lowercase letter (a, b c ..)
+    else if (97 <= value && value <= 122) {
+      continue;
+    }
+
+    else {
+      return false;
+    }
+  }
+
+  return true
+  
+}
+
 function sendMessage() {
   let message = document.getElementById('msgBox').value.trim()
   if(message === '') return //do nothing
-  socket.emit('clientSays', message, "bob")
+  socket.emit('clientSays', message, socket_username)
   document.getElementById('msgBox').value = ''
 }
 
@@ -35,6 +111,17 @@ function sendMessage() {
 function submitUsername() {
   let username = document.getElementById('usernamebox').value.trim()
   //if(username === '') return //do nothing
+  if (username === '') {
+    document.getElementById('usernamebox').value = ''
+    return;
+  }
+  if (usernameCheck(username) === false) {
+    document.getElementById('usernamebox').value = ''
+    document.getElementById('error').style.display = 'block'
+
+    return;
+  }
+  afterUsernameScreen()
   socket_username = username
   console.log("USERNAME: " + socket_username + "CONNECTED")
 
@@ -45,11 +132,20 @@ function submitUsername() {
 function handleKeyDown(event) {
   const ENTER_KEY = 13 //keycode for enter key
   if (event.keyCode === ENTER_KEY) {
-    sendMessage()
-    return false //don't propogate event
+
+    if (socket_username === '') {
+      //lets ENTER key to be used for username input.
+      submitUsername();
+      return false;
+    }
+
+    else {
+      sendMessage()
+      return false //don't propogate event
+    }
+    
   }
 }
-waitForUsername();
 
 
 //Add event listeners
@@ -59,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
   //add listener to buttons
   document.getElementById('send_button').addEventListener('click', sendMessage)
   document.getElementById('send_username_button').addEventListener('click', submitUsername)
-  
+  document.getElementById('clear_button').addEventListener('click', clearButton)
   
   //add keyboard handler for the document as a whole, not separate elements.
   document.addEventListener('keydown', handleKeyDown)
