@@ -1,3 +1,1 @@
-get a list of clients:
-
-https://stackoverflow.com/questions/6563885/how-do-i-get-a-list-of-connected-sockets-clients-with-socket-io
+//private messages show to other users

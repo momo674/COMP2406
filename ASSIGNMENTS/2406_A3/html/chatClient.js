@@ -5,17 +5,59 @@
 const socket = io() //by default connects to same server that served the page
 //beforeUsernameScreen()
 var socket_username = ''
+var userset
+
+
+socket.on('exportedData', (data) => {
+  userset = data
+  console.log(userset);
+})
+
 
 socket.on('serverSays', function(message) {
+  console.log(userset)
+  console.log(message)
   if (socket_username === '') {return;} //makes sure only to recieve messages once fully connected.
-  if (message === 'You are connected to CHAT SERVER') {
+  if (message === `${socket_username} HAS CONNECTED`) {
     let msgDiv = document.createElement('div')
     msgDiv.textContent = message
-    msgDiv.style.background = '#ccffcc'; // Add a CSS class for sent messages
+    msgDiv.style.background = '#c1f7c7'; // Add a CSS class for sent messages
     msgDiv.style.marginBottom= '20px';
     document.getElementById('messages').appendChild(msgDiv)
     return;
   }
+
+  let raw_message = (message.split(': '))
+  console.log(raw_message)
+  let potential_user = raw_message[1]
+  let potential_sender = raw_message[0];
+  let potential_message = raw_message[2];
+
+
+
+
+  if ((typeof potential_user) === "undefined") {
+    console.log("NULL")
+  }
+
+  else if (potential_user === socket_username) {
+    console.log("PRIVATE MESSAGE PINGED")
+    let msgDiv = document.createElement('div')
+    //check to see object is not null
+    msgDiv.textContent = potential_sender + " (private): " + potential_message;
+    document.getElementById('messages').appendChild(msgDiv)
+    msgDiv.style.background = '#fa787c';
+    msgDiv.style.marginRight= '60px'; 
+
+    //msgDiv.style.background = '#808080'; // Add a CSS class for sent messages
+
+
+    return;
+  }
+
+  //check if incoming message is meant for socket user.
+
+  
   let msgDiv = document.createElement('div')
   msgDiv.textContent = message
 
@@ -27,7 +69,6 @@ socket.on('serverSays', function(message) {
   //msgDiv.innerHTML = message
   //msgDiv.innerText = message
   const [s, m] = message.split(': ');
-  console.log(s);
   if (s === socket_username) {
     // Message sent by you (the current socket)
     msgDiv.style.background = '#ccebff'; // Add a CSS class for sent messages
@@ -41,6 +82,8 @@ socket.on('serverSays', function(message) {
 
   document.getElementById('messages').appendChild(msgDiv)
 })
+
+
 
 // function beforeUsernameScreen() {
 //   document.getElementById('title').style.display = 'none'
@@ -121,7 +164,7 @@ function usernameCheck(username) {
   return true
   
 }
-
+//returns true if
 function sendMessage() {
   let message = document.getElementById('msgBox').value.trim()
   if(message === '') return //do nothing
@@ -140,6 +183,7 @@ function submitUsername() {
   if (usernameCheck(username) === false) {
     document.getElementById('usernamebox').value = ''
     document.getElementById('error').style.display = 'block'
+    document.getElementById('messages').removeChild(msgDiv)
 
     return;
   }
@@ -148,6 +192,8 @@ function submitUsername() {
   console.log("USERNAME: " + socket_username + "CONNECTED")
 
   document.getElementById('usernamebox').value = ''
+  socket.emit('clientSays', '~~~SENT_USERNAME~~~' , socket_username)
+
 }
 
 
