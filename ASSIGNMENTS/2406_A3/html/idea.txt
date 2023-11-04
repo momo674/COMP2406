@@ -1,1 +1,16 @@
-//private messages show to other users
+//private messages show to other users -> FIXED
+
+//entering the wrong name results in website breaking. --> idk what happened to it
+
+
+
+
+        VVVV FIXED THIS ISSUE VVVV
+//single letter names without : get broken when trying to simply say it
+ex:
+
+user1 = a
+user 2 = b
+
+a says b -> turns into private
+b says a -> turns into private

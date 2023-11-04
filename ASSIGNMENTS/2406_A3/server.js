@@ -39,7 +39,7 @@ const MIME_TYPES = {
   'txt': 'text/plain'
 }
 
-const users = new Set()
+const users = []
 
 function get_mime(filename) {
   for (let ext in MIME_TYPES) {
@@ -85,25 +85,28 @@ io.on('connection', function(socket) {
   var USERNAME = '';
   //console.dir(socket)
   console.log('client connected')
-
+  
 
   socket.on('clientSays', function(data, data2) {
     if (USERNAME === "" && data2 != "") {
       USERNAME = data2;
       console.log(`USER ' ${data2} ' CONNECTED!`)
+      
+      users.push(data2)
+      socket.emit('exportedData', users)
+
       socket.emit('serverSays', `${USERNAME} HAS CONNECTED`)
-      users.add(data2)
-      socket.emit('exportedData', users);
 
-      console.log(users)
-
+      
     }
+
     
     //data1 = message
     //data2 = username
-    socket.emit('exportedData', users)
+    
     //check if username is appropiate
     if (data2 === '') {
+
       return
     }
     
@@ -112,22 +115,23 @@ io.on('connection', function(socket) {
     
     //to broadcast message to everyone including sender:
     if (data != '~~~SENT_USERNAME~~~') {
+
       io.emit('serverSays', USERNAME +": " + data)
     }
+
      //broadcast to everyone including sender
 
     
     //alternatively to broadcast to everyone except the sender
     //socket.broadcast.emit('serverSays', data)
-  })
 
+  })
   socket.on('disconnect', function(data) {
     //event emitted when a client disconnects
-    users.delete(USERNAME);
-    socket.emit('exportedData', users);
-
     console.log('client disconnected')
   })
+
+
 })
 
 console.log(`Server Running at port ${PORT}  CNTL-C to quit`)
