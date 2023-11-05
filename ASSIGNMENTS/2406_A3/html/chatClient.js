@@ -32,13 +32,59 @@ socket.on('serverSays', function(message) {
     let potential_user = raw_message[1]
     let potential_sender = raw_message[0];
     let potential_message = raw_message[2];
-    let potential_multiple_users = potential_user.split(", ")
-  console.log(potential_multiple_users)
+    let potential_multiple_users = potential_user.split(",")
+    console.log(potential_multiple_users)
+    let stat = true;
 
-
+    for (let i = 0; i < potential_multiple_users.size; i++) {
+      if (!userset.includes(potential_multiple_users[i])) {
+        stat = false;
+        break;
+      }
+    }
     //check if we are not the sender or the reciever, then we cannot see this message
 
     console.log(socket_username + " " + potential_sender + " " + userset.includes(potential_sender) + " |||| " +  socket_username + " " + potential_user + " " + userset.includes(potential_user))
+    if (stat) {
+      console.log("MULTIPLE WHISPER")
+      for (let i = 0; i < potential_multiple_users.length; i++) {
+        let selected = potential_multiple_users[i];
+
+        if ((typeof selected) === "undefined") {
+          console.log("NULL")
+        }
+    
+        //only the sender and reciever get to see private message.
+        //if we are not reciever, we dont see message
+        
+        if (!((selected === socket_username) && (userset.includes(selected)))) {
+          if(!((potential_sender === socket_username) && (userset.includes(potential_sender)))){
+            continue;
+    
+          }
+        }
+        
+    
+        else if (selected === socket_username) {
+          console.log("PRIVATE MESSAGE PINGED")
+          let msgDiv = document.createElement('div')
+          //check to see object is not null
+          msgDiv.textContent = potential_sender + " (private): " + potential_message;
+          document.getElementById('messages').appendChild(msgDiv)
+          msgDiv.style.background = '#fa787c';
+          msgDiv.style.marginRight= '60px'; 
+    
+          //msgDiv.style.background = '#808080'; // Add a CSS class for sent messages
+    
+    
+          return;
+        }
+      }
+      return;
+    }
+
+
+
 
     if ((typeof potential_user) === "undefined") {
       console.log("NULL")
