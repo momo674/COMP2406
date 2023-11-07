@@ -39,7 +39,7 @@ const MIME_TYPES = {
   'txt': 'text/plain'
 }
 
-const users = []
+let users = []
 
 function get_mime(filename) {
   for (let ext in MIME_TYPES) {
@@ -127,8 +127,9 @@ io.on('connection', function(socket) {
 
   })
   socket.on('disconnect', function(data) {
-    //event emitted when a client disconnects
-    console.log('client disconnected')
+    console.log(USERNAME +" Disconnected")
+    users = users.filter(users => users !== USERNAME);
+    socket.emit('exportedData', users)
   })
 
 

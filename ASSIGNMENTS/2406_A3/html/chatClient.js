@@ -32,7 +32,7 @@ socket.on('serverSays', function(message) {
     let potential_user = raw_message[1]
     let potential_sender = raw_message[0];
     let potential_message = raw_message[2];
-    let potential_multiple_users = potential_user.split(",")
+    let potential_multiple_users = potential_user.split(", ")
     console.log(potential_multiple_users)
     let stat = true;
 
