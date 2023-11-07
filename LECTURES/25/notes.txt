@@ -1,0 +1,7 @@
+thin client:
+    one that is expecting the rendering is happening somewhere else, and expected to only drawe HTML
+thick client:
+    handles incoming data aswell as draw HTML
+
+
+    
