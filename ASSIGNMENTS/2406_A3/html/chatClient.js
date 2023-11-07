@@ -32,7 +32,8 @@ socket.on('serverSays', function(message) {
     let potential_user = raw_message[1]
     let potential_sender = raw_message[0];
     let potential_message = raw_message[2];
-    let potential_multiple_users = potential_user.split(", ")
+    console.log(potential_user);
+    let potential_multiple_users = commaManage(potential_user);
     console.log(potential_multiple_users)
     let stat = true;
 
@@ -43,8 +44,7 @@ socket.on('serverSays', function(message) {
       }
     }
     //check if we are not the sender or the reciever, then we cannot see this message
-
-    console.log(socket_username + " " + potential_sender + " " + userset.includes(potential_sender) + " |||| " +  socket_username + " " + potential_user + " " + userset.includes(potential_user))
+    console.log(potential_multiple_users)
     if (stat) {
       console.log("MULTIPLE WHISPER")
       for (let i = 0; i < potential_multiple_users.length; i++) {
@@ -291,3 +291,33 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('keydown', handleKeyDown)
   //document.addEventListener('keyup', handleKeyUp)
 })
+
+
+function commaManage(message) {
+  if (message.includes(',')) {
+    let list = []
+    let current_word = ""
+    for (let i = 0; i < message.length; i++) {
+      let character = message.charAt(i);
+
+      if (character !== ",") {
+        current_word+=character
+      }
+      else {
+        current_word = current_word.trim();
+        list.push(current_word);
+        current_word = "";
+      }
+    }
+
+    current_word = current_word.trim();
+    list.push(current_word);
+
+    return list;
+  }
+  else {
+    let p = []
+    p.push(message)
+    return p;
+  }
+}
