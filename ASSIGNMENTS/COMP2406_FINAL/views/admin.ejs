@@ -1,0 +1,26 @@
+<!-- admin.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+  <h1>Welcome, <%= username %>!</h1>
+
+  <h2>All Users</h2>
+  <ul>
+    <% users.forEach(user => { %>
+      <li><strong>ID:</strong> <%= user.id %>, <strong>Username:</strong> <%= user.username %>, <strong>Role:</strong> <%= user.role %></li>
+    <% }); %>
+  </ul>
+
+  <!-- Button to wipe out the comments table -->
+  <form action="/wipe-comments" method="post">
+    <button type="submit">Wipe Comments Table</button>
+  </form>
+
+  <!-- Other content as needed -->
+
+</body>
+</html>

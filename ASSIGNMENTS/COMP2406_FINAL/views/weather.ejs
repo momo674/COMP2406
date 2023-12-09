@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+
+  <title>Weather Information</title>
+</head>
+<body>
+  <h1>Ottawa's Weather</h1>
+  <h2>Hello <%= username %>!</h2>
+
+  <% if (weatherData) { %>
+    <% const weather = weatherData.weather[0]; %>
+    <p><strong>Today's Weather:</strong> <%= weather.main %></p>
+    <p><strong>Temperature:</strong> <%=Math.round(weatherData['main']['temp'] - '273.15') + "°C"%></p>
+    <p><strong>Description:</strong> <%= weather.description %>. Today's Highest will be <%= Math.round(weatherData['main']['temp_max'] - '273.15')+ "°C"%> and it'll be as low as <%= Math.round(weatherData['main']['temp_min']- '273.15')+ "°C"%> </p>
+
+    <br><br><br>
+    <h3>Add a thought about today's weather: </h3>
+    <input type="text" id="textbox" name="Name">
+    <button id = "post">POST !</button>
+    <br><br><br>
+
+    <!-- Display comments as HTML elements -->
+  <h2>Discussion Board:</h2>
+  <% if (comments && comments.length > 0) { %>
+    <ul>
+      <% comments.forEach(comment => { %>
+        <li><strong><%= comment.user_username %>:</strong> <%= comment.comment_text %></li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>No comments available</p>
+  <% } %>
+    
+  <% } else { %>
+    <p>No weather information available</p>
+  <% } %>
+    <script>window.currentUser = ' <%= username %>' 
+
+
+    </script>
+  <script src = "/clientside.js"></script>
+
+</body>
+
+
+</html>
